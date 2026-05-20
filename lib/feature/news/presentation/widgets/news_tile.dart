@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/highlighted_text.dart';
 
@@ -19,7 +20,14 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final brand = theme.extension<BrandTheme>();
+
     return Card(
+      elevation: brand?.cardElevation ?? 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(brand?.cardRadius ?? 16),
+      ),
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -69,6 +77,7 @@ class NewsTile extends StatelessWidget {
                   onPressed: onBookmarkTap,
                   icon: Icon(
                     isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ],

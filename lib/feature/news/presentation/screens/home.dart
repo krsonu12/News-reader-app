@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
-import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
+import 'package:news_reader_app/feature/settings/presentation/screens/settings_screen.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
@@ -63,6 +64,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final state = ref.watch(newsNotifierProvider);
     final notifier = ref.read(newsNotifierProvider.notifier);
     final articles = notifier.currentArticles;
@@ -71,7 +73,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Top News'),
+          title:  Text('Top News',style: theme.textTheme.headlineMedium,),
           actions: [
             IconButton(
               icon: const Icon(Icons.search),
@@ -79,6 +81,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Navigator.of(
                   context,
                 ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                );
               },
             ),
           ],
@@ -89,10 +99,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   : NewsFeedType.everything;
               notifier.setActiveFeed(feed);
             },
-            tabs: const [
+            tabs: [
               Tab(text: 'Top Headlines'),
               Tab(text: 'Everything'),
             ],
+            labelStyle: theme.textTheme.titleMedium,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white70,
+            unselectedLabelStyle: theme.textTheme.titleMedium,
           ),
         ),
         body: Column(
@@ -113,6 +127,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: state.isLoading && articles.isEmpty
                   ? const NewsShimmerList()
                   : RefreshIndicator(
+                      color: theme.colorScheme.primary,
                       onRefresh: notifier.refreshCurrentFeed,
                       child: articles.isEmpty
                           ? ListView(
@@ -123,6 +138,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     state.hasError
                                         ? state.errorMessage
                                         : 'No news found',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge,
                                   ),
                                 ),
                               ],

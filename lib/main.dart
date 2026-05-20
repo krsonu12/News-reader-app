@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:news_reader_app/core/theme/app_theme.dart';
+import 'package:news_reader_app/core/theme/theme_notifier.dart';
 import 'package:news_reader_app/feature/news/data/local/hive_boxes.dart';
 import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart';
 
@@ -13,12 +15,21 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(title: 'News Reader', home: SplashScreen());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeNotifierProvider).value ?? ThemeMode.system;
+    final fontSize = ref.watch(fontSizeNotifierProvider).value ?? 16.0;
+
+    return MaterialApp(
+      title: 'News Reader',
+      theme: AppTheme.lightTheme(fontSize),
+      darkTheme: AppTheme.darkTheme(fontSize),
+      themeMode: themeMode,
+      home: const SplashScreen(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

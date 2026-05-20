@@ -7,6 +7,7 @@ import 'package:news_reader_app/feature/news/presentation/search_states/search_s
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
+import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
 
 @RoutePage()
 class SearchScreen extends ConsumerStatefulWidget {
@@ -71,7 +72,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               autofocus: true,
               decoration: InputDecoration(
                 hintText: 'Search articles (min 3 characters)',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
                 suffixIcon: _controller.text.isEmpty
                     ? null
                     : IconButton(
@@ -84,7 +88,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           setState(() {});
                         },
                       ),
-                border: const OutlineInputBorder(),
+                filled: true,
+                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    Theme.of(context).extension<BrandTheme>()?.cardRadius ?? 16,
+                  ),
+                ),
               ),
               onChanged: (value) {
                 ref.read(searchNotifierProvider.notifier).onQueryChanged(value);

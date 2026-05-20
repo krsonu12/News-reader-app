@@ -10,4 +10,9 @@ class HiveBoxes {
     await Hive.openBox<String>(cachedEverything);
     await Hive.openBox<String>(bookmarks);
   }
+
+  static Future<void> clearCache() async {
+    await Hive.box<String>(cachedTopHeadlines).clear();
+    await Hive.box<String>(cachedEverything).clear();
+  }
 }
