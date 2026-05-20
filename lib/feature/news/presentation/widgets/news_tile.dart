@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/presentation/widgets/highlighted_text.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({
@@ -8,11 +9,13 @@ class NewsTile extends StatelessWidget {
     required this.article,
     required this.isBookmarked,
     required this.onBookmarkTap,
+    this.highlightQuery = '',
   });
 
   final NewsModel article;
   final bool isBookmarked;
   final VoidCallback onBookmarkTap;
+  final String highlightQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +38,23 @@ class NewsTile extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 8),
-            Text(
-              article.title.isEmpty ? 'Untitled' : article.title,
+            HighlightedText(
+              text: article.title.isEmpty ? 'Untitled' : article.title,
+              highlight: highlightQuery,
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             if (article.description.isNotEmpty) ...[
               const SizedBox(height: 6),
-              Text(article.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+              HighlightedText(
+                text: article.description,
+                highlight: highlightQuery,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
             const SizedBox(height: 8),
             Row(

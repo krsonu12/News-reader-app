@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
+import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/states/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
@@ -16,6 +20,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late final ScrollController _scrollController;
+  bool _loadMoreRequested = false;
 
   @override
   void initState() {
@@ -33,9 +38,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+    final state = ref.read(newsNotifierProvider);
+    final feed = state.activeFeed;
+    final hasMore = feed == NewsFeedType.topHeadlines
+        ? state.topHasMore
+        : state.everythingHasMore;
+
+    if (!hasMore || state.isLoadingMore || state.isLoading) {
+      _loadMoreRequested = false;
+      return;
+    }
+
     final threshold = _scrollController.position.maxScrollExtent - 350;
-    if (_scrollController.position.pixels >= threshold) {
-      ref.read(newsNotifierProvider.notifier).loadMoreCurrentFeed();
+    if (_scrollController.position.pixels >= threshold && !_loadMoreRequested) {
+      _loadMoreRequested = true;
+      ref
+          .read(newsNotifierProvider.notifier)
+          .loadMoreCurrentFeed()
+          .whenComplete(() {
+            _loadMoreRequested = false;
+          });
     }
   }
 
@@ -50,6 +72,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Top News'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+              },
+            ),
+          ],
           bottom: TabBar(
             onTap: (index) {
               final feed = index == 0
@@ -57,7 +89,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   : NewsFeedType.everything;
               notifier.setActiveFeed(feed);
             },
-            tabs: const [Tab(text: 'Top Headlines'), Tab(text: 'Everything')],
+            tabs: const [
+              Tab(text: 'Top Headlines'),
+              Tab(text: 'Everything'),
+            ],
           ),
         ),
         body: Column(
@@ -67,7 +102,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 content: const Text('Offline mode: showing cached news'),
                 actions: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pop();
+                    },
                     child: const Text('OK'),
                   ),
                 ],
@@ -93,9 +130,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           : ListView.builder(
                               controller: _scrollController,
                               itemCount:
-                                  articles.length + (state.isLoadingMore ? 1 : 0),
+                                  articles.length +
+                                  (state.isLoadingMore ? 1 : 0),
                               itemBuilder: (context, index) {
                                 if (index >= articles.length) {
+                                  log(
+                                    "loading more articles: ${articles.length}",
+                                  );
                                   return const Padding(
                                     padding: EdgeInsets.all(16),
                                     child: Center(
@@ -106,8 +147,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 final article = articles[index];
                                 return NewsTile(
                                   article: article,
-                                  isBookmarked: notifier.isBookmarked(article.url),
-                                  onBookmarkTap: () => notifier.toggleBookmark(article),
+                                  isBookmarked: notifier.isBookmarked(
+                                    article.id,
+                                  ),
+                                  onBookmarkTap: () =>
+                                      notifier.toggleBookmark(article),
                                 );
                               },
                             ),

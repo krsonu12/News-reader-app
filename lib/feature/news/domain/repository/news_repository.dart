@@ -8,12 +8,17 @@ class NewsPageResult {
     required this.isFromCache,
     required this.page,
     required this.hasMore,
+    this.totalResults = 0,
   });
 
   final List<NewsModel> articles;
   final bool isFromCache;
   final int page;
   final bool hasMore;
+  final int totalResults;
+
+  static const int pageSize = 20;
+  static const int maxPages = 10;
 }
 
 abstract class NewsRepository {
@@ -21,7 +26,7 @@ abstract class NewsRepository {
     required NewsFeedType feed,
     required int page,
     int pageSize = 20,
-    String searchQuery = 'technology',
+    String searchQuery = 't',
   });
 
   Future<List<NewsModel>> getCachedFeed({required NewsFeedType feed});
@@ -40,4 +45,11 @@ abstract class NewsRepository {
   Future<bool> isBookmarked(String articleId);
 
   Future<void> toggleBookmark(NewsModel article);
+
+  Future<NewsPageResult> searchEverything({
+    required String query,
+    required int page,
+    int pageSize = NewsPageResult.pageSize,
+    String? from,
+  });
 }

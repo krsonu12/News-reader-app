@@ -65,7 +65,8 @@ class NewsNotifier extends Notifier<NewsState> {
     bool reset = false,
     bool isRefresh = false,
   }) async {
-    if (state.isLoadingMore || state.isLoading) return;
+    if (state.isLoadingMore) return;
+    if (state.isLoading && !isRefresh) return;
 
     final page = reset ? 1 : _pageForFeed(feed);
 

@@ -24,7 +24,7 @@ class RepositoryImpl implements NewsRepository {
     required NewsFeedType feed,
     required int page,
     int pageSize = 20,
-    String searchQuery = 'technology',
+    String searchQuery = 't',
   }) async {
     try {
       final response = await dio.get<Map<String, dynamic>>(
@@ -49,17 +49,19 @@ class RepositoryImpl implements NewsRepository {
         throw const AppFailure('Invalid articles response.');
       }
 
-      final articles = articlesJson
-          .whereType<Map>()
-          .map((item) {
-            final json = Map<String, dynamic>.from(item);
-            final source = json['source'];
-            json['sourceName'] = source is Map ? (source['name'] ?? '') : '';
-            return NewsModel.fromJson(json);
-          })
-          .toList();
+      final articles = articlesJson.whereType<Map>().map((item) {
+        final json = Map<String, dynamic>.from(item);
+        final source = json['source'];
+        json['sourceName'] = source is Map ? (source['name'] ?? '') : '';
+        return NewsModel.fromJson(json);
+      }).toList();
 
-      final hasMore = (page * pageSize) < totalResults;
+      final hasMore = _hasMorePages(
+        page: page,
+        pageSize: pageSize,
+        totalResults: totalResults,
+        fetchedCount: articles.length,
+      );
 
       if (page == 1) {
         await cacheFeed(feed: feed, articles: articles);
@@ -70,6 +72,7 @@ class RepositoryImpl implements NewsRepository {
         isFromCache: false,
         page: page,
         hasMore: hasMore,
+        totalResults: totalResults,
       );
     } on DioException catch (error) {
       final cached = page == 1
@@ -123,5 +126,70 @@ class RepositoryImpl implements NewsRepository {
   @override
   Stream<List<NewsModel>> watchBookmarks() {
     return bookmarkLocalDataSource.watchBookmarks();
+  }
+
+  @override
+  Future<NewsPageResult> searchEverything({
+    required String query,
+    required int page,
+    int pageSize = NewsPageResult.pageSize,
+    String? from,
+  }) async {
+    try {
+      final response = await dio.get<Map<String, dynamic>>(
+        AppUrls.everything,
+        queryParameters: {
+          'apiKey': apiKey,
+          'q': query,
+          'page': page,
+          'pageSize': pageSize,
+          'sortBy': 'publishedAt',
+          'from': ?from,
+        },
+      );
+
+      final payload = response.data ?? <String, dynamic>{};
+      final articlesJson = payload['articles'];
+      final totalResults = payload['totalResults'] as int? ?? 0;
+
+      if (articlesJson is! List) {
+        throw const AppFailure('Invalid articles response.');
+      }
+
+      final articles = articlesJson.whereType<Map>().map((item) {
+        final json = Map<String, dynamic>.from(item);
+        final source = json['source'];
+        json['sourceName'] = source is Map ? (source['name'] ?? '') : '';
+        return NewsModel.fromJson(json);
+      }).toList();
+
+      final hasMore = _hasMorePages(
+        page: page,
+        pageSize: pageSize,
+        totalResults: totalResults,
+        fetchedCount: articles.length,
+      );
+
+      return NewsPageResult(
+        articles: articles,
+        isFromCache: false,
+        page: page,
+        hasMore: hasMore,
+        totalResults: totalResults,
+      );
+    } on DioException catch (error) {
+      throw mapDioExceptionToFailure(error);
+    }
+  }
+
+  bool _hasMorePages({
+    required int page,
+    required int pageSize,
+    required int totalResults,
+    required int fetchedCount,
+  }) {
+    if (fetchedCount == 0) return false;
+    if (page >= NewsPageResult.maxPages) return false;
+    return page * pageSize < totalResults;
   }
 }

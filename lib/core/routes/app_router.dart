@@ -8,5 +8,6 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
     AutoRoute(page: HomeRoute.page, path: '/home'),
+    AutoRoute(page: SearchRoute.page, path: '/search'),
   ];
 }
