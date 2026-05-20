@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/screens/article_detail_screen.dart';
 
+@RoutePage()
 class BookmarksScreen extends ConsumerWidget {
   const BookmarksScreen({super.key});
 
@@ -14,11 +16,14 @@ class BookmarksScreen extends ConsumerWidget {
     final bookmarks = state.bookmarks;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bookmarks'),
-      ),
+      appBar: AppBar(title: const Text('Bookmarks')),
       body: bookmarks.isEmpty
-          ? Center(child: Text('No bookmarks', style: Theme.of(context).textTheme.bodyLarge))
+          ? Center(
+              child: Text(
+                'No bookmarks',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            )
           : ListView.builder(
               itemCount: bookmarks.length,
               itemBuilder: (context, index) {
@@ -34,16 +39,26 @@ class BookmarksScreen extends ConsumerWidget {
                   ),
                   onDismissed: (_) {
                     notifier.toggleBookmark(article);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Bookmark removed')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Bookmark removed')),
+                    );
                   },
                   child: ListTile(
                     leading: article.urlToImage.isNotEmpty
-                        ? Image.network(article.urlToImage, width: 72, fit: BoxFit.cover)
+                        ? Image.network(
+                            article.urlToImage,
+                            width: 72,
+                            fit: BoxFit.cover,
+                          )
                         : null,
                     title: Text(article.title),
                     subtitle: Text(article.sourceName),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article)));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => ArticleDetailScreen(article: article),
+                        ),
+                      );
                     },
                   ),
                 );

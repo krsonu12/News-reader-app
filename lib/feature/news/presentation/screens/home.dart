@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/screens/article_detail_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
@@ -73,26 +74,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       NewsFeedType.technology,
       NewsFeedType.health,
     ];
-    final categoryLabels = [
-      'Top',
-      'Business',
-      'Sports',
-      'Tech',
-      'Health',
-    ];
-    final activeIndex = categories.indexOf(state.activeFeed).clamp(0, categories.length - 1);
+    final categoryLabels = ['Top', 'Business', 'Sports', 'Tech', 'Health'];
+    final activeIndex = categories
+        .indexOf(state.activeFeed)
+        .clamp(0, categories.length - 1);
 
     return DefaultTabController(
       length: categories.length,
       initialIndex: activeIndex,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Top News', style: theme.textTheme.headlineMedium),
+          title: Text('Top News',style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold) ,),
           actions: [
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
               },
             ),
             IconButton(
@@ -171,6 +170,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 }
                                 final article = articles[index];
                                 return NewsTile(
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          ArticleDetailScreen(article: article),
+                                    ),
+                                  ),
                                   article: article,
                                   isBookmarked: notifier.isBookmarked(
                                     article.id,
