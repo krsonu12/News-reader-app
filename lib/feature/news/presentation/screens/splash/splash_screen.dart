@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/core/theme/app_text_style.dart';
-import 'package:news_reader_app/feature/news/presentation/screens/home.dart';
 
 @RoutePage()
 class SplashScreen extends ConsumerStatefulWidget {
@@ -31,9 +31,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
-        );
+        context.router.replace(HomeRoute());
       }
     });
 

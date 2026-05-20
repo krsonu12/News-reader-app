@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
-import 'package:news_reader_app/feature/news/presentation/screens/article_detail_screen.dart';
 
 @RoutePage()
 class BookmarksScreen extends ConsumerWidget {
@@ -54,11 +54,7 @@ class BookmarksScreen extends ConsumerWidget {
                     title: Text(article.title),
                     subtitle: Text(article.sourceName),
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => ArticleDetailScreen(article: article),
-                        ),
-                      );
+                      context.router.push(ArticleDetailRoute(article: article));
                     },
                   ),
                 );

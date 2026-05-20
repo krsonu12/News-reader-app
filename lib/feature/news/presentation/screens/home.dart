@@ -3,14 +3,12 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
-import 'package:news_reader_app/feature/news/presentation/screens/article_detail_screen.dart';
-import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
-import 'package:news_reader_app/feature/settings/presentation/screens/settings_screen.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
@@ -84,22 +82,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       initialIndex: activeIndex,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Top News',style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold) ,),
+          title: Text(
+            'Top News',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+
           actions: [
+            IconButton(
+              icon: const Icon(Icons.bookmark),
+              onPressed: () {
+                context.router.push(BookmarksRoute());
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+                context.router.push(const SearchRoute());
               },
             ),
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                );
+                context.router.push(SettingsRoute());
               },
             ),
           ],
@@ -170,18 +174,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 }
                                 final article = articles[index];
                                 return NewsTile(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          ArticleDetailScreen(article: article),
-                                    ),
-                                  ),
                                   article: article,
                                   isBookmarked: notifier.isBookmarked(
                                     article.id,
                                   ),
                                   onBookmarkTap: () =>
                                       notifier.toggleBookmark(article),
+                                  onTap: () {
+                                    context.router.push(
+                                      ArticleDetailRoute(article: article),
+                                    );
+                                  },
                                 );
                               },
                             ),
