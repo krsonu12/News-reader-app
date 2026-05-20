@@ -175,18 +175,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   );
                                 }
                                 final article = articles[index];
-                                return NewsTile(
-                                  article: article,
-                                  isBookmarked: notifier.isBookmarked(
-                                    article.id,
+                                return RepaintBoundary(
+                                  child: NewsTile(
+                                    article: article,
+                                    isBookmarked: notifier.isBookmarked(
+                                      article.id,
+                                    ),
+                                    onBookmarkTap: () =>
+                                        notifier.toggleBookmark(article),
+                                    onTap: () {
+                                      context.router.push(
+                                        ArticleDetailRoute(article: article),
+                                      );
+                                    },
                                   ),
-                                  onBookmarkTap: () =>
-                                      notifier.toggleBookmark(article),
-                                  onTap: () {
-                                    context.router.push(
-                                      ArticleDetailRoute(article: article),
-                                    );
-                                  },
                                 );
                               },
                             ),

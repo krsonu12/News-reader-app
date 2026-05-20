@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/highlighted_text.dart';
@@ -20,6 +20,15 @@ class NewsTile extends StatelessWidget {
   final VoidCallback onBookmarkTap;
   final String highlightQuery;
   final VoidCallback? onTap;
+
+  int _estimateReadMinutes() {
+    final text = '${article.content} ${article.description} ${article.title}'
+        .trim();
+    if (text.isEmpty) return 1;
+    final words = text.split(RegExp(r"\s+")).length;
+    final wpm = 200;
+    return (words / wpm).ceil().clamp(1, 60);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +91,10 @@ class NewsTile extends StatelessWidget {
                           : article.sourceName,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
+                  ),
+                  Text(
+                    '${_estimateReadMinutes()} min read',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   IconButton(
                     onPressed: onBookmarkTap,
