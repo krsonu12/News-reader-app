@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news_reader_app/core/routes/app_router.dart';
 import 'package:news_reader_app/core/theme/app_theme.dart';
 import 'package:news_reader_app/core/theme/theme_notifier.dart';
-import 'package:news_reader_app/feature/news/data/local/hive_boxes.dart';
+import 'package:news_reader_app/feature/news/data/local_datasource/hive_boxes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

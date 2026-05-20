@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/theme/theme_notifier.dart';
-import 'package:news_reader_app/feature/news/data/local/hive_boxes.dart';
+import 'package:news_reader_app/feature/news/data/local_datasource/hive_boxes.dart';
 
 @RoutePage()
 class SettingsScreen extends ConsumerWidget {

@@ -3,8 +3,8 @@ import 'package:news_reader_app/core/constants/app_urls.dart';
 import 'package:news_reader_app/core/constants/secret.dart';
 import 'package:news_reader_app/core/error/error_mapper.dart';
 import 'package:news_reader_app/core/error/failures.dart';
-import 'package:news_reader_app/feature/news/data/local/bookmark_local_datasource.dart';
-import 'package:news_reader_app/feature/news/data/local/news_cache_local_datasource.dart';
+import 'package:news_reader_app/feature/news/data/local_datasource/bookmark_local_datasource.dart';
+import 'package:news_reader_app/feature/news/data/local_datasource/news_cache_local_datasource.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 
