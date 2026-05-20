@@ -27,15 +27,29 @@ class RepositoryImpl implements NewsRepository {
     String searchQuery = 't',
   }) async {
     try {
+      final topHeadlinesFeeds = {
+        NewsFeedType.topHeadlines,
+        NewsFeedType.business,
+        NewsFeedType.sports,
+        NewsFeedType.technology,
+        NewsFeedType.health,
+      };
+      final categoryMap = {
+        NewsFeedType.business: 'business',
+        NewsFeedType.sports: 'sports',
+        NewsFeedType.technology: 'technology',
+        NewsFeedType.health: 'health',
+      };
       final response = await dio.get<Map<String, dynamic>>(
-        feed == NewsFeedType.topHeadlines
+        topHeadlinesFeeds.contains(feed)
             ? AppUrls.topHeadlines
             : AppUrls.everything,
         queryParameters: {
           'apiKey': apiKey,
           'page': page,
           'pageSize': pageSize,
-          if (feed == NewsFeedType.topHeadlines) 'country': 'us',
+          if (topHeadlinesFeeds.contains(feed)) 'country': 'us',
+          if (categoryMap.containsKey(feed)) 'category': categoryMap[feed],
           if (feed == NewsFeedType.everything) 'q': searchQuery,
           if (feed == NewsFeedType.everything) 'sortBy': 'publishedAt',
         },

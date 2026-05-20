@@ -1,6 +1,13 @@
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 
-enum NewsFeedType { topHeadlines, everything }
+enum NewsFeedType {
+  topHeadlines,
+  business,
+  sports,
+  technology,
+  health,
+  everything,
+}
 
 class NewsPageResult {
   const NewsPageResult({

@@ -40,10 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final state = ref.read(newsNotifierProvider);
-    final feed = state.activeFeed;
-    final hasMore = feed == NewsFeedType.topHeadlines
-        ? state.topHasMore
-        : state.everythingHasMore;
+    final hasMore = state.topHasMore;
 
     if (!hasMore || state.isLoadingMore || state.isLoading) {
       _loadMoreRequested = false;
@@ -69,18 +66,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final notifier = ref.read(newsNotifierProvider.notifier);
     final articles = notifier.currentArticles;
 
+    final categories = [
+      NewsFeedType.topHeadlines,
+      NewsFeedType.business,
+      NewsFeedType.sports,
+      NewsFeedType.technology,
+      NewsFeedType.health,
+    ];
+    final categoryLabels = [
+      'Top',
+      'Business',
+      'Sports',
+      'Tech',
+      'Health',
+    ];
+    final activeIndex = categories.indexOf(state.activeFeed).clamp(0, categories.length - 1);
+
     return DefaultTabController(
-      length: 2,
+      length: categories.length,
+      initialIndex: activeIndex,
       child: Scaffold(
         appBar: AppBar(
-          title:  Text('Top News',style: theme.textTheme.headlineMedium,),
+          title: Text('Top News', style: theme.textTheme.headlineMedium),
           actions: [
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SearchScreen()));
               },
             ),
             IconButton(
@@ -93,20 +105,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ],
           bottom: TabBar(
-            onTap: (index) {
-              final feed = index == 0
-                  ? NewsFeedType.topHeadlines
-                  : NewsFeedType.everything;
-              notifier.setActiveFeed(feed);
-            },
-            tabs: [
-              Tab(text: 'Top Headlines'),
-              Tab(text: 'Everything'),
-            ],
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            onTap: (index) => notifier.setActiveFeed(categories[index]),
+            tabs: categoryLabels.map((label) => Tab(text: label)).toList(),
             labelStyle: theme.textTheme.titleMedium,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             unselectedLabelStyle: theme.textTheme.titleMedium,
+            indicatorColor: Colors.white,
           ),
         ),
         body: Column(

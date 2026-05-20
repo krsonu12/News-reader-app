@@ -48,16 +48,18 @@ class NewsNotifier extends Notifier<NewsState> {
   }
 
   List<NewsModel> get currentArticles {
-    return state.activeFeed == NewsFeedType.topHeadlines
-        ? state.topHeadlines
-        : state.everything;
+    return state.activeFeed == NewsFeedType.everything
+        ? state.everything
+        : state.topHeadlines;
   }
 
   Future<void> setActiveFeed(NewsFeedType feed) async {
-    state = state.copyWith(activeFeed: feed, hasError: false, errorMessage: '');
-    if (currentArticles.isEmpty) {
-      await loadFeed(feed: feed, reset: true);
+    if (feed == state.activeFeed && currentArticles.isNotEmpty) {
+      return;
     }
+
+    state = state.copyWith(activeFeed: feed, hasError: false, errorMessage: '');
+    await loadFeed(feed: feed, reset: true);
   }
 
   Future<void> loadFeed({
@@ -75,6 +77,7 @@ class NewsNotifier extends Notifier<NewsState> {
       isRefreshing: isRefresh,
       hasError: false,
       errorMessage: '',
+      topHeadlines: reset ? [] : state.topHeadlines,
     );
 
     try {
@@ -147,19 +150,15 @@ class NewsNotifier extends Notifier<NewsState> {
   }
 
   int _pageForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.topHeadlines ? state.topPage : state.everythingPage;
+    return feed == NewsFeedType.everything ? state.everythingPage : state.topPage;
   }
 
   bool _hasMoreForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.topHeadlines
-        ? state.topHasMore
-        : state.everythingHasMore;
+    return feed == NewsFeedType.everything ? state.everythingHasMore : state.topHasMore;
   }
 
   List<NewsModel> _articlesForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.topHeadlines
-        ? state.topHeadlines
-        : state.everything;
+    return feed == NewsFeedType.everything ? state.everything : state.topHeadlines;
   }
 
   void _applyPageResult({
@@ -187,21 +186,21 @@ class NewsNotifier extends Notifier<NewsState> {
     required NewsFeedType feed,
     required List<NewsModel> value,
   }) {
-    state = feed == NewsFeedType.topHeadlines
-        ? state.copyWith(topHeadlines: value)
-        : state.copyWith(everything: value);
+    state = feed == NewsFeedType.everything
+        ? state.copyWith(everything: value)
+        : state.copyWith(topHeadlines: value);
   }
 
   void _setFeedPage({required NewsFeedType feed, required int value}) {
-    state = feed == NewsFeedType.topHeadlines
-        ? state.copyWith(topPage: value)
-        : state.copyWith(everythingPage: value);
+    state = feed == NewsFeedType.everything
+        ? state.copyWith(everythingPage: value)
+        : state.copyWith(topPage: value);
   }
 
   void _setFeedHasMore({required NewsFeedType feed, required bool value}) {
-    state = feed == NewsFeedType.topHeadlines
-        ? state.copyWith(topHasMore: value)
-        : state.copyWith(everythingHasMore: value);
+    state = feed == NewsFeedType.everything
+        ? state.copyWith(everythingHasMore: value)
+        : state.copyWith(topHasMore: value);
   }
 
   void _listenBookmarks() {
