@@ -7,6 +7,7 @@ import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/widgets/animated_news_ticker.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
 
@@ -121,6 +122,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         body: Column(
           children: [
+            AnimatedNewsTicker(headlines: articles),
             if (state.isOffline)
               MaterialBanner(
                 content: const Text('Offline mode: showing cached news'),
