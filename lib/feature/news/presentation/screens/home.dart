@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart';
-import 'package:news_reader_app/feature/news/presentation/states/news_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
 

@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
-import 'package:news_reader_app/feature/news/presentation/states/news_notifier.dart';
-import 'package:news_reader_app/feature/news/presentation/states/search_notifier.dart';
-import 'package:news_reader_app/feature/news/presentation/states/search_state.dart';
+import 'package:news_reader_app/feature/news/presentation/search_notfier/search_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/search_states/search_state.dart';
+import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_tile.dart';
 
@@ -61,9 +61,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final highlight = state.query.trim();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search News'),
-      ),
+      appBar: AppBar(title: const Text('Search News')),
       body: Column(
         children: [
           Padding(
@@ -80,7 +78,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         icon: const Icon(Icons.clear),
                         onPressed: () {
                           _controller.clear();
-                          ref.read(searchNotifierProvider.notifier).onQueryChanged('');
+                          ref
+                              .read(searchNotifierProvider.notifier)
+                              .onQueryChanged('');
                           setState(() {});
                         },
                       ),
@@ -127,7 +127,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       return Center(child: Text(state.errorMessage));
     }
 
-    if (state.articles.isEmpty && !state.queryTooShort && highlight.length >= 3) {
+    if (state.articles.isEmpty &&
+        !state.queryTooShort &&
+        highlight.length >= 3) {
       return const Center(child: Text('No articles found'));
     }
 

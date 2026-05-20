@@ -8,7 +8,7 @@ import 'package:news_reader_app/feature/news/data/local/news_cache_local_datasou
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/data/remote_datasource/repository_impl.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
-import 'package:news_reader_app/feature/news/presentation/states/news_state.dart';
+import 'package:news_reader_app/feature/news/presentation/news_states/news_state.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   return Dio(

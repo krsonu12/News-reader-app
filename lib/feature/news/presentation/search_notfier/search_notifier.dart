@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/error/failures.dart';
-import 'package:news_reader_app/feature/news/presentation/states/news_notifier.dart';
-import 'package:news_reader_app/feature/news/presentation/states/search_state.dart';
+import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
+import 'package:news_reader_app/feature/news/presentation/search_states/search_state.dart';
 
 const _debounceDuration = Duration(milliseconds: 300);
 const _minQueryLength = 3;
