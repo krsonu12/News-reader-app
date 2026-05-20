@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
-import 'package:news_reader_app/core/theme/app_text_style.dart';
 
 @RoutePage()
 class SplashScreen extends ConsumerStatefulWidget {
@@ -46,6 +45,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: AnimatedBuilder(
         animation: _animation,
@@ -62,22 +62,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     MediaQuery.of(context).size.height * 2,
                   ),
                   painter: SplashShapePainter(_animation.value),
-                ),
-              ),
-
-              /// Tagline
-              Positioned(
-                bottom: 40,
-                left: 0,
-                right: 0,
-                child: Text(
-                  'News with peace of mind',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.textStyleDmSans.copyWith(
-                    color: AppColors.colorWhite,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ),
             ],
