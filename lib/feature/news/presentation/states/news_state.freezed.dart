@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NewsState {
 
- List<NewsModel> get newsList; bool get isLoading; bool get hasError; String get errorMessage;
+ NewsFeedType get activeFeed; List<NewsModel> get topHeadlines; List<NewsModel> get everything; List<NewsModel> get bookmarks; bool get isLoading; bool get isRefreshing; bool get isLoadingMore; bool get isOffline; bool get topHasMore; bool get everythingHasMore; int get topPage; int get everythingPage; bool get hasError; String get errorMessage;
 /// Create a copy of NewsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $NewsStateCopyWith<NewsState> get copyWith => _$NewsStateCopyWithImpl<NewsState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsState&&const DeepCollectionEquality().equals(other.newsList, newsList)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.hasError, hasError) || other.hasError == hasError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsState&&(identical(other.activeFeed, activeFeed) || other.activeFeed == activeFeed)&&const DeepCollectionEquality().equals(other.topHeadlines, topHeadlines)&&const DeepCollectionEquality().equals(other.everything, everything)&&const DeepCollectionEquality().equals(other.bookmarks, bookmarks)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.isOffline, isOffline) || other.isOffline == isOffline)&&(identical(other.topHasMore, topHasMore) || other.topHasMore == topHasMore)&&(identical(other.everythingHasMore, everythingHasMore) || other.everythingHasMore == everythingHasMore)&&(identical(other.topPage, topPage) || other.topPage == topPage)&&(identical(other.everythingPage, everythingPage) || other.everythingPage == everythingPage)&&(identical(other.hasError, hasError) || other.hasError == hasError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(newsList),isLoading,hasError,errorMessage);
+int get hashCode => Object.hash(runtimeType,activeFeed,const DeepCollectionEquality().hash(topHeadlines),const DeepCollectionEquality().hash(everything),const DeepCollectionEquality().hash(bookmarks),isLoading,isRefreshing,isLoadingMore,isOffline,topHasMore,everythingHasMore,topPage,everythingPage,hasError,errorMessage);
 
 @override
 String toString() {
-  return 'NewsState(newsList: $newsList, isLoading: $isLoading, hasError: $hasError, errorMessage: $errorMessage)';
+  return 'NewsState(activeFeed: $activeFeed, topHeadlines: $topHeadlines, everything: $everything, bookmarks: $bookmarks, isLoading: $isLoading, isRefreshing: $isRefreshing, isLoadingMore: $isLoadingMore, isOffline: $isOffline, topHasMore: $topHasMore, everythingHasMore: $everythingHasMore, topPage: $topPage, everythingPage: $everythingPage, hasError: $hasError, errorMessage: $errorMessage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $NewsStateCopyWith<$Res>  {
   factory $NewsStateCopyWith(NewsState value, $Res Function(NewsState) _then) = _$NewsStateCopyWithImpl;
 @useResult
 $Res call({
- List<NewsModel> newsList, bool isLoading, bool hasError, String errorMessage
+ NewsFeedType activeFeed, List<NewsModel> topHeadlines, List<NewsModel> everything, List<NewsModel> bookmarks, bool isLoading, bool isRefreshing, bool isLoadingMore, bool isOffline, bool topHasMore, bool everythingHasMore, int topPage, int everythingPage, bool hasError, String errorMessage
 });
 
 
@@ -62,11 +62,21 @@ class _$NewsStateCopyWithImpl<$Res>
 
 /// Create a copy of NewsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? newsList = null,Object? isLoading = null,Object? hasError = null,Object? errorMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? activeFeed = null,Object? topHeadlines = null,Object? everything = null,Object? bookmarks = null,Object? isLoading = null,Object? isRefreshing = null,Object? isLoadingMore = null,Object? isOffline = null,Object? topHasMore = null,Object? everythingHasMore = null,Object? topPage = null,Object? everythingPage = null,Object? hasError = null,Object? errorMessage = null,}) {
   return _then(_self.copyWith(
-newsList: null == newsList ? _self.newsList : newsList // ignore: cast_nullable_to_non_nullable
+activeFeed: null == activeFeed ? _self.activeFeed : activeFeed // ignore: cast_nullable_to_non_nullable
+as NewsFeedType,topHeadlines: null == topHeadlines ? _self.topHeadlines : topHeadlines // ignore: cast_nullable_to_non_nullable
+as List<NewsModel>,everything: null == everything ? _self.everything : everything // ignore: cast_nullable_to_non_nullable
+as List<NewsModel>,bookmarks: null == bookmarks ? _self.bookmarks : bookmarks // ignore: cast_nullable_to_non_nullable
 as List<NewsModel>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,hasError: null == hasError ? _self.hasError : hasError // ignore: cast_nullable_to_non_nullable
+as bool,isRefreshing: null == isRefreshing ? _self.isRefreshing : isRefreshing // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
+as bool,isOffline: null == isOffline ? _self.isOffline : isOffline // ignore: cast_nullable_to_non_nullable
+as bool,topHasMore: null == topHasMore ? _self.topHasMore : topHasMore // ignore: cast_nullable_to_non_nullable
+as bool,everythingHasMore: null == everythingHasMore ? _self.everythingHasMore : everythingHasMore // ignore: cast_nullable_to_non_nullable
+as bool,topPage: null == topPage ? _self.topPage : topPage // ignore: cast_nullable_to_non_nullable
+as int,everythingPage: null == everythingPage ? _self.everythingPage : everythingPage // ignore: cast_nullable_to_non_nullable
+as int,hasError: null == hasError ? _self.hasError : hasError // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -153,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<NewsModel> newsList,  bool isLoading,  bool hasError,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( NewsFeedType activeFeed,  List<NewsModel> topHeadlines,  List<NewsModel> everything,  List<NewsModel> bookmarks,  bool isLoading,  bool isRefreshing,  bool isLoadingMore,  bool isOffline,  bool topHasMore,  bool everythingHasMore,  int topPage,  int everythingPage,  bool hasError,  String errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NewsState() when $default != null:
-return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage);case _:
+return $default(_that.activeFeed,_that.topHeadlines,_that.everything,_that.bookmarks,_that.isLoading,_that.isRefreshing,_that.isLoadingMore,_that.isOffline,_that.topHasMore,_that.everythingHasMore,_that.topPage,_that.everythingPage,_that.hasError,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -174,10 +184,10 @@ return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<NewsModel> newsList,  bool isLoading,  bool hasError,  String errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( NewsFeedType activeFeed,  List<NewsModel> topHeadlines,  List<NewsModel> everything,  List<NewsModel> bookmarks,  bool isLoading,  bool isRefreshing,  bool isLoadingMore,  bool isOffline,  bool topHasMore,  bool everythingHasMore,  int topPage,  int everythingPage,  bool hasError,  String errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _NewsState():
-return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage);case _:
+return $default(_that.activeFeed,_that.topHeadlines,_that.everything,_that.bookmarks,_that.isLoading,_that.isRefreshing,_that.isLoadingMore,_that.isOffline,_that.topHasMore,_that.everythingHasMore,_that.topPage,_that.everythingPage,_that.hasError,_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +204,10 @@ return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<NewsModel> newsList,  bool isLoading,  bool hasError,  String errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( NewsFeedType activeFeed,  List<NewsModel> topHeadlines,  List<NewsModel> everything,  List<NewsModel> bookmarks,  bool isLoading,  bool isRefreshing,  bool isLoadingMore,  bool isOffline,  bool topHasMore,  bool everythingHasMore,  int topPage,  int everythingPage,  bool hasError,  String errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _NewsState() when $default != null:
-return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage);case _:
+return $default(_that.activeFeed,_that.topHeadlines,_that.everything,_that.bookmarks,_that.isLoading,_that.isRefreshing,_that.isLoadingMore,_that.isOffline,_that.topHasMore,_that.everythingHasMore,_that.topPage,_that.everythingPage,_that.hasError,_that.errorMessage);case _:
   return null;
 
 }
@@ -209,17 +219,39 @@ return $default(_that.newsList,_that.isLoading,_that.hasError,_that.errorMessage
 
 
 class _NewsState implements NewsState {
-  const _NewsState({final  List<NewsModel> newsList = const [], this.isLoading = false, this.hasError = false, this.errorMessage = ''}): _newsList = newsList;
+  const _NewsState({this.activeFeed = NewsFeedType.topHeadlines, final  List<NewsModel> topHeadlines = const [], final  List<NewsModel> everything = const [], final  List<NewsModel> bookmarks = const [], this.isLoading = false, this.isRefreshing = false, this.isLoadingMore = false, this.isOffline = false, this.topHasMore = true, this.everythingHasMore = true, this.topPage = 1, this.everythingPage = 1, this.hasError = false, this.errorMessage = ''}): _topHeadlines = topHeadlines,_everything = everything,_bookmarks = bookmarks;
   
 
- final  List<NewsModel> _newsList;
-@override@JsonKey() List<NewsModel> get newsList {
-  if (_newsList is EqualUnmodifiableListView) return _newsList;
+@override@JsonKey() final  NewsFeedType activeFeed;
+ final  List<NewsModel> _topHeadlines;
+@override@JsonKey() List<NewsModel> get topHeadlines {
+  if (_topHeadlines is EqualUnmodifiableListView) return _topHeadlines;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_newsList);
+  return EqualUnmodifiableListView(_topHeadlines);
+}
+
+ final  List<NewsModel> _everything;
+@override@JsonKey() List<NewsModel> get everything {
+  if (_everything is EqualUnmodifiableListView) return _everything;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_everything);
+}
+
+ final  List<NewsModel> _bookmarks;
+@override@JsonKey() List<NewsModel> get bookmarks {
+  if (_bookmarks is EqualUnmodifiableListView) return _bookmarks;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_bookmarks);
 }
 
 @override@JsonKey() final  bool isLoading;
+@override@JsonKey() final  bool isRefreshing;
+@override@JsonKey() final  bool isLoadingMore;
+@override@JsonKey() final  bool isOffline;
+@override@JsonKey() final  bool topHasMore;
+@override@JsonKey() final  bool everythingHasMore;
+@override@JsonKey() final  int topPage;
+@override@JsonKey() final  int everythingPage;
 @override@JsonKey() final  bool hasError;
 @override@JsonKey() final  String errorMessage;
 
@@ -233,16 +265,16 @@ _$NewsStateCopyWith<_NewsState> get copyWith => __$NewsStateCopyWithImpl<_NewsSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsState&&const DeepCollectionEquality().equals(other._newsList, _newsList)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.hasError, hasError) || other.hasError == hasError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsState&&(identical(other.activeFeed, activeFeed) || other.activeFeed == activeFeed)&&const DeepCollectionEquality().equals(other._topHeadlines, _topHeadlines)&&const DeepCollectionEquality().equals(other._everything, _everything)&&const DeepCollectionEquality().equals(other._bookmarks, _bookmarks)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isRefreshing, isRefreshing) || other.isRefreshing == isRefreshing)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.isOffline, isOffline) || other.isOffline == isOffline)&&(identical(other.topHasMore, topHasMore) || other.topHasMore == topHasMore)&&(identical(other.everythingHasMore, everythingHasMore) || other.everythingHasMore == everythingHasMore)&&(identical(other.topPage, topPage) || other.topPage == topPage)&&(identical(other.everythingPage, everythingPage) || other.everythingPage == everythingPage)&&(identical(other.hasError, hasError) || other.hasError == hasError)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_newsList),isLoading,hasError,errorMessage);
+int get hashCode => Object.hash(runtimeType,activeFeed,const DeepCollectionEquality().hash(_topHeadlines),const DeepCollectionEquality().hash(_everything),const DeepCollectionEquality().hash(_bookmarks),isLoading,isRefreshing,isLoadingMore,isOffline,topHasMore,everythingHasMore,topPage,everythingPage,hasError,errorMessage);
 
 @override
 String toString() {
-  return 'NewsState(newsList: $newsList, isLoading: $isLoading, hasError: $hasError, errorMessage: $errorMessage)';
+  return 'NewsState(activeFeed: $activeFeed, topHeadlines: $topHeadlines, everything: $everything, bookmarks: $bookmarks, isLoading: $isLoading, isRefreshing: $isRefreshing, isLoadingMore: $isLoadingMore, isOffline: $isOffline, topHasMore: $topHasMore, everythingHasMore: $everythingHasMore, topPage: $topPage, everythingPage: $everythingPage, hasError: $hasError, errorMessage: $errorMessage)';
 }
 
 
@@ -253,7 +285,7 @@ abstract mixin class _$NewsStateCopyWith<$Res> implements $NewsStateCopyWith<$Re
   factory _$NewsStateCopyWith(_NewsState value, $Res Function(_NewsState) _then) = __$NewsStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<NewsModel> newsList, bool isLoading, bool hasError, String errorMessage
+ NewsFeedType activeFeed, List<NewsModel> topHeadlines, List<NewsModel> everything, List<NewsModel> bookmarks, bool isLoading, bool isRefreshing, bool isLoadingMore, bool isOffline, bool topHasMore, bool everythingHasMore, int topPage, int everythingPage, bool hasError, String errorMessage
 });
 
 
@@ -270,11 +302,21 @@ class __$NewsStateCopyWithImpl<$Res>
 
 /// Create a copy of NewsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? newsList = null,Object? isLoading = null,Object? hasError = null,Object? errorMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? activeFeed = null,Object? topHeadlines = null,Object? everything = null,Object? bookmarks = null,Object? isLoading = null,Object? isRefreshing = null,Object? isLoadingMore = null,Object? isOffline = null,Object? topHasMore = null,Object? everythingHasMore = null,Object? topPage = null,Object? everythingPage = null,Object? hasError = null,Object? errorMessage = null,}) {
   return _then(_NewsState(
-newsList: null == newsList ? _self._newsList : newsList // ignore: cast_nullable_to_non_nullable
+activeFeed: null == activeFeed ? _self.activeFeed : activeFeed // ignore: cast_nullable_to_non_nullable
+as NewsFeedType,topHeadlines: null == topHeadlines ? _self._topHeadlines : topHeadlines // ignore: cast_nullable_to_non_nullable
+as List<NewsModel>,everything: null == everything ? _self._everything : everything // ignore: cast_nullable_to_non_nullable
+as List<NewsModel>,bookmarks: null == bookmarks ? _self._bookmarks : bookmarks // ignore: cast_nullable_to_non_nullable
 as List<NewsModel>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,hasError: null == hasError ? _self.hasError : hasError // ignore: cast_nullable_to_non_nullable
+as bool,isRefreshing: null == isRefreshing ? _self.isRefreshing : isRefreshing // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
+as bool,isOffline: null == isOffline ? _self.isOffline : isOffline // ignore: cast_nullable_to_non_nullable
+as bool,topHasMore: null == topHasMore ? _self.topHasMore : topHasMore // ignore: cast_nullable_to_non_nullable
+as bool,everythingHasMore: null == everythingHasMore ? _self.everythingHasMore : everythingHasMore // ignore: cast_nullable_to_non_nullable
+as bool,topPage: null == topPage ? _self.topPage : topPage // ignore: cast_nullable_to_non_nullable
+as int,everythingPage: null == everythingPage ? _self.everythingPage : everythingPage // ignore: cast_nullable_to_non_nullable
+as int,hasError: null == hasError ? _self.hasError : hasError // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));

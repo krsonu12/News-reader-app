@@ -6,12 +6,24 @@ part 'news_model.g.dart';
 @freezed
 abstract class NewsModel with _$NewsModel {
   const factory NewsModel({
-    required String title,
-    required String description,
-    required String url,
-    required String urlToImage,
-    required String publishedAt,
+    @Default('') String title,
+    @Default('') String description,
+    @Default('') String content,
+    @Default('') String url,
+    @Default('') String urlToImage,
+    @Default('') String publishedAt,
+    @Default('') String sourceName,
+    @Default('') String author,
   }) = _NewsModel;
   factory NewsModel.fromJson(Map<String, dynamic> json) =>
       _$NewsModelFromJson(json);
+}
+
+extension NewsModelX on NewsModel {
+  String get id {
+    if (url.isNotEmpty) return url;
+    final composite = '${title.trim()}_${publishedAt.trim()}';
+    if (composite != '_') return composite;
+    return 'unknown_article';
+  }
 }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NewsModel {
 
- String get title; String get description; String get url; String get urlToImage; String get publishedAt;
+ String get title; String get description; String get content; String get url; String get urlToImage; String get publishedAt; String get sourceName; String get author;
 /// Create a copy of NewsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $NewsModelCopyWith<NewsModel> get copyWith => _$NewsModelCopyWithImpl<NewsModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,url,urlToImage,publishedAt);
+int get hashCode => Object.hash(runtimeType,title,description,content,url,urlToImage,publishedAt,sourceName,author);
 
 @override
 String toString() {
-  return 'NewsModel(title: $title, description: $description, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt)';
+  return 'NewsModel(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $NewsModelCopyWith<$Res>  {
   factory $NewsModelCopyWith(NewsModel value, $Res Function(NewsModel) _then) = _$NewsModelCopyWithImpl;
 @useResult
 $Res call({
- String title, String description, String url, String urlToImage, String publishedAt
+ String title, String description, String content, String url, String urlToImage, String publishedAt, String sourceName, String author
 });
 
 
@@ -65,13 +65,16 @@ class _$NewsModelCopyWithImpl<$Res>
 
 /// Create a copy of NewsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? content = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,Object? sourceName = null,Object? author = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,urlToImage: null == urlToImage ? _self.urlToImage : urlToImage // ignore: cast_nullable_to_non_nullable
 as String,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as String,sourceName: null == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
+as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -157,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String description,  String url,  String urlToImage,  String publishedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NewsModel() when $default != null:
-return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.publishedAt);case _:
+return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   return orElse();
 
 }
@@ -178,10 +181,10 @@ return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.p
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String description,  String url,  String urlToImage,  String publishedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)  $default,) {final _that = this;
 switch (_that) {
 case _NewsModel():
-return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.publishedAt);case _:
+return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +201,10 @@ return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.p
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String description,  String url,  String urlToImage,  String publishedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)?  $default,) {final _that = this;
 switch (_that) {
 case _NewsModel() when $default != null:
-return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.publishedAt);case _:
+return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   return null;
 
 }
@@ -213,14 +216,17 @@ return $default(_that.title,_that.description,_that.url,_that.urlToImage,_that.p
 @JsonSerializable()
 
 class _NewsModel implements NewsModel {
-  const _NewsModel({required this.title, required this.description, required this.url, required this.urlToImage, required this.publishedAt});
+  const _NewsModel({this.title = '', this.description = '', this.content = '', this.url = '', this.urlToImage = '', this.publishedAt = '', this.sourceName = '', this.author = ''});
   factory _NewsModel.fromJson(Map<String, dynamic> json) => _$NewsModelFromJson(json);
 
-@override final  String title;
-@override final  String description;
-@override final  String url;
-@override final  String urlToImage;
-@override final  String publishedAt;
+@override@JsonKey() final  String title;
+@override@JsonKey() final  String description;
+@override@JsonKey() final  String content;
+@override@JsonKey() final  String url;
+@override@JsonKey() final  String urlToImage;
+@override@JsonKey() final  String publishedAt;
+@override@JsonKey() final  String sourceName;
+@override@JsonKey() final  String author;
 
 /// Create a copy of NewsModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,url,urlToImage,publishedAt);
+int get hashCode => Object.hash(runtimeType,title,description,content,url,urlToImage,publishedAt,sourceName,author);
 
 @override
 String toString() {
-  return 'NewsModel(title: $title, description: $description, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt)';
+  return 'NewsModel(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
 }
 
 
@@ -255,7 +261,7 @@ abstract mixin class _$NewsModelCopyWith<$Res> implements $NewsModelCopyWith<$Re
   factory _$NewsModelCopyWith(_NewsModel value, $Res Function(_NewsModel) _then) = __$NewsModelCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String description, String url, String urlToImage, String publishedAt
+ String title, String description, String content, String url, String urlToImage, String publishedAt, String sourceName, String author
 });
 
 
@@ -272,13 +278,16 @@ class __$NewsModelCopyWithImpl<$Res>
 
 /// Create a copy of NewsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? content = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,Object? sourceName = null,Object? author = null,}) {
   return _then(_NewsModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,urlToImage: null == urlToImage ? _self.urlToImage : urlToImage // ignore: cast_nullable_to_non_nullable
 as String,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as String,sourceName: null == sourceName ? _self.sourceName : sourceName // ignore: cast_nullable_to_non_nullable
+as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:news_reader_app/feature/news/data/local/hive_boxes.dart';
 import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart';
 
-void main() {
-  runApp(ProviderScope(child: const MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await HiveBoxes.openAll();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +17,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Flutter Demo', home: SplashScreen());
+    return const MaterialApp(title: 'News Reader', home: SplashScreen());
   }
 }
