@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
+import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
 import 'package:share_plus/share_plus.dart';
 
 @RoutePage()
@@ -65,6 +66,7 @@ class ArticleDetailScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     imageUrl: article.urlToImage,
+                    cacheManager: newsImageCacheManager,
                     height: 180,
                     width: double.infinity,
                     fit: BoxFit.fill,

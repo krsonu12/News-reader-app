@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
@@ -44,6 +45,7 @@ class NewsTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     imageUrl: article.urlToImage,
+                    cacheManager: newsImageCacheManager,
                     height: 180,
                     width: double.infinity,
                     fit: BoxFit.fill,
