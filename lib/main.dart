@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news_reader_app/feature/news/data/local/hive_boxes.dart';
@@ -6,6 +7,7 @@ import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
   await Hive.initFlutter();
   await HiveBoxes.openAll();
   runApp(const ProviderScope(child: MyApp()));
