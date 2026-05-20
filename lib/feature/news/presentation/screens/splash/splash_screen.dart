@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/core/theme/app_text_style.dart';
-import 'package:news_reader_app/feature/news/screens/home.dart';
+import 'package:news_reader_app/feature/news/presentation/screens/home.dart';
 
 @RoutePage()
 class SplashScreen extends ConsumerStatefulWidget {

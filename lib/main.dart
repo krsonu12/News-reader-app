@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_reader_app/feature/news/splash/splash_screen.dart';
+import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));

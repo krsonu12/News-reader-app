@@ -10,8 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:news_reader_app/feature/news/screens/home.dart' as _i1;
-import 'package:news_reader_app/feature/news/splash/splash_screen.dart' as _i2;
+import 'package:news_reader_app/feature/news/presentation/screens/home.dart'
+    as _i1;
+import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart'
+    as _i2;
 
 /// generated route for
 /// [_i1.HomeScreen]
