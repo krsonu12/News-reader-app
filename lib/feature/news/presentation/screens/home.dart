@@ -40,7 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final state = ref.read(newsNotifierProvider);
-    final hasMore = state.topHasMore;
+    final hasMore = state.feedHasMore[state.activeFeed] ?? true;
 
     if (!hasMore || state.isLoadingMore || state.isLoading) {
       _loadMoreRequested = false;

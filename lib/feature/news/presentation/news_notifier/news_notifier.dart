@@ -48,9 +48,7 @@ class NewsNotifier extends Notifier<NewsState> {
   }
 
   List<NewsModel> get currentArticles {
-    return state.activeFeed == NewsFeedType.everything
-        ? state.everything
-        : state.topHeadlines;
+    return state.feedArticles[state.activeFeed] ?? [];
   }
 
   Future<void> setActiveFeed(NewsFeedType feed) async {
@@ -71,13 +69,17 @@ class NewsNotifier extends Notifier<NewsState> {
     if (state.isLoading && !isRefresh) return;
 
     final page = reset ? 1 : _pageForFeed(feed);
+    final nextFeedArticles = Map<NewsFeedType, List<NewsModel>>.from(state.feedArticles);
+    if (reset) {
+      nextFeedArticles.remove(feed);
+    }
 
     state = state.copyWith(
       isLoading: reset && !isRefresh,
       isRefreshing: isRefresh,
       hasError: false,
       errorMessage: '',
-      topHeadlines: reset ? [] : state.topHeadlines,
+      feedArticles: nextFeedArticles,
     );
 
     try {
@@ -150,15 +152,15 @@ class NewsNotifier extends Notifier<NewsState> {
   }
 
   int _pageForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.everything ? state.everythingPage : state.topPage;
+    return state.feedPages[feed] ?? 1;
   }
 
   bool _hasMoreForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.everything ? state.everythingHasMore : state.topHasMore;
+    return state.feedHasMore[feed] ?? true;
   }
 
   List<NewsModel> _articlesForFeed(NewsFeedType feed) {
-    return feed == NewsFeedType.everything ? state.everything : state.topHeadlines;
+    return state.feedArticles[feed] ?? [];
   }
 
   void _applyPageResult({
@@ -186,21 +188,21 @@ class NewsNotifier extends Notifier<NewsState> {
     required NewsFeedType feed,
     required List<NewsModel> value,
   }) {
-    state = feed == NewsFeedType.everything
-        ? state.copyWith(everything: value)
-        : state.copyWith(topHeadlines: value);
+    final next = Map<NewsFeedType, List<NewsModel>>.from(state.feedArticles);
+    next[feed] = value;
+    state = state.copyWith(feedArticles: next);
   }
 
   void _setFeedPage({required NewsFeedType feed, required int value}) {
-    state = feed == NewsFeedType.everything
-        ? state.copyWith(everythingPage: value)
-        : state.copyWith(topPage: value);
+    final next = Map<NewsFeedType, int>.from(state.feedPages);
+    next[feed] = value;
+    state = state.copyWith(feedPages: next);
   }
 
   void _setFeedHasMore({required NewsFeedType feed, required bool value}) {
-    state = feed == NewsFeedType.everything
-        ? state.copyWith(everythingHasMore: value)
-        : state.copyWith(topHasMore: value);
+    final next = Map<NewsFeedType, bool>.from(state.feedHasMore);
+    next[feed] = value;
+    state = state.copyWith(feedHasMore: next);
   }
 
   void _listenBookmarks() {

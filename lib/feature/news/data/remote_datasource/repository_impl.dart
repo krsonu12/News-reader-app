@@ -150,16 +150,20 @@ class RepositoryImpl implements NewsRepository {
     String? from,
   }) async {
     try {
+      final queryParameters = {
+        'apiKey': apiKey,
+        'q': query,
+        'page': page,
+        'pageSize': pageSize,
+        'sortBy': 'publishedAt',
+      };
+      if (from != null) {
+        queryParameters['from'] = from;
+      }
+
       final response = await dio.get<Map<String, dynamic>>(
         AppUrls.everything,
-        queryParameters: {
-          'apiKey': apiKey,
-          'q': query,
-          'page': page,
-          'pageSize': pageSize,
-          'sortBy': 'publishedAt',
-          'from': ?from,
-        },
+        queryParameters: queryParameters,
       );
 
       final payload = response.data ?? <String, dynamic>{};

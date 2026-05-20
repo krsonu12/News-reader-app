@@ -12,14 +12,14 @@ class NewsCacheLocalDataSource {
   }) async {
     final box = _boxForFeed(feed);
     await box.put(
-      'items',
+      _cacheKeyForFeed(feed),
       jsonEncode(articles.map((article) => article.toJson()).toList()),
     );
   }
 
   List<NewsModel> getFeed({required NewsFeedType feed}) {
     final box = _boxForFeed(feed);
-    final encoded = box.get('items');
+    final encoded = box.get(_cacheKeyForFeed(feed));
     if (encoded == null || encoded.isEmpty) return [];
 
     final decoded = jsonDecode(encoded);
@@ -32,17 +32,37 @@ class NewsCacheLocalDataSource {
   }
 
   List<NewsModel> getAnyFeed() {
-    final top = getFeed(feed: NewsFeedType.topHeadlines);
-    if (top.isNotEmpty) return top;
+    final topFeeds = [
+      NewsFeedType.topHeadlines,
+      NewsFeedType.business,
+      NewsFeedType.sports,
+      NewsFeedType.technology,
+      NewsFeedType.health,
+    ];
+    for (final feed in topFeeds) {
+      final items = getFeed(feed: feed);
+      if (items.isNotEmpty) return items;
+    }
 
     return getFeed(feed: NewsFeedType.everything);
   }
 
   Box<String> _boxForFeed(NewsFeedType feed) {
+    final topHeadlinesFeeds = {
+      NewsFeedType.topHeadlines,
+      NewsFeedType.business,
+      NewsFeedType.sports,
+      NewsFeedType.technology,
+      NewsFeedType.health,
+    };
     return Hive.box<String>(
-      feed == NewsFeedType.topHeadlines
+      topHeadlinesFeeds.contains(feed)
           ? HiveBoxes.cachedTopHeadlines
           : HiveBoxes.cachedEverything,
     );
+  }
+
+  String _cacheKeyForFeed(NewsFeedType feed) {
+    return feed.name;
   }
 }
