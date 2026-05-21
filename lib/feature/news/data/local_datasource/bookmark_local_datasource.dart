@@ -11,12 +11,27 @@ class BookmarkLocalDataSource {
 
   Box<String> get _box => Hive.box<String>(HiveBoxes.bookmarks);
 
+  BookmarkLocalDataSource() {
+    _bookmarksController.onListen = _emitBookmarks;
+  }
+
   Future<void> toggleBookmark(NewsModel article) async {
-    if (_box.containsKey(article.id)) {
-      await _box.delete(article.id);
+    final id = article.id;
+    if (_box.containsKey(id)) {
+      await _box.delete(id);
     } else {
-      await _box.put(article.id, jsonEncode(article.toJson()));
+      await _box.put(id, jsonEncode(article.toJson()));
     }
+    _emitBookmarks();
+  }
+
+  Future<void> addBookmark(NewsModel article) async {
+    await _box.put(article.id, jsonEncode(article.toJson()));
+    _emitBookmarks();
+  }
+
+  Future<void> removeBookmark(String articleId) async {
+    await _box.delete(articleId);
     _emitBookmarks();
   }
 
@@ -25,16 +40,26 @@ class BookmarkLocalDataSource {
   }
 
   List<NewsModel> getBookmarks() {
-    return _box.values
-        .map((encoded) => jsonDecode(encoded))
-        .whereType()
-        .map((item) => NewsModel.fromJson(item))
-        .toList();
+    return _box.values.map(_decodeBookmark).whereType<NewsModel>().toList();
   }
 
   Stream<List<NewsModel>> watchBookmarks() {
-    _emitBookmarks();
     return _bookmarksController.stream;
+  }
+
+  NewsModel? _decodeBookmark(String encoded) {
+    try {
+      final value = jsonDecode(encoded);
+      if (value is Map<String, dynamic>) {
+        return NewsModel.fromJson(value);
+      }
+      if (value is Map) {
+        return NewsModel.fromJson(Map<String, dynamic>.from(value));
+      }
+    } catch (_) {
+      // Ignore invalid bookmark entries and keep other bookmarks intact.
+    }
+    return null;
   }
 
   void _emitBookmarks() {

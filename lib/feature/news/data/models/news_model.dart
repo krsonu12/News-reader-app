@@ -22,8 +22,18 @@ abstract class NewsModel with _$NewsModel {
 extension NewsModelX on NewsModel {
   String get id {
     if (url.isNotEmpty) return url;
-    final composite = '${title.trim()}_${publishedAt.trim()}';
-    if (composite != '_') return composite;
+
+    final fallback = [
+      title,
+      description,
+      content,
+      urlToImage,
+      publishedAt,
+      sourceName,
+      author,
+    ].map((value) => value.trim()).where((value) => value.isNotEmpty).join('|');
+
+    if (fallback.isNotEmpty) return fallback;
     return 'unknown_article';
   }
 }

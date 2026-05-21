@@ -69,7 +69,9 @@ class NewsNotifier extends Notifier<NewsState> {
     if (state.isLoading && !isRefresh) return;
 
     final page = reset ? 1 : _pageForFeed(feed);
-    final nextFeedArticles = Map<NewsFeedType, List<NewsModel>>.from(state.feedArticles);
+    final nextFeedArticles = Map<NewsFeedType, List<NewsModel>>.from(
+      state.feedArticles,
+    );
     if (reset) {
       nextFeedArticles.remove(feed);
     }
@@ -83,10 +85,9 @@ class NewsNotifier extends Notifier<NewsState> {
     );
 
     try {
-      final result = await ref.read(newsRepositoryProvider).fetchFeedPage(
-        feed: feed,
-        page: page,
-      );
+      final result = await ref
+          .read(newsRepositoryProvider)
+          .fetchFeedPage(feed: feed, page: page);
       _applyPageResult(feed: feed, result: result, reset: reset);
     } on AppFailure catch (error) {
       state = state.copyWith(
@@ -119,15 +120,17 @@ class NewsNotifier extends Notifier<NewsState> {
     state = state.copyWith(isLoadingMore: true);
 
     try {
-      final result = await ref.read(newsRepositoryProvider).fetchFeedPage(
-        feed: feed,
-        page: nextPage,
-      );
+      final result = await ref
+          .read(newsRepositoryProvider)
+          .fetchFeedPage(feed: feed, page: nextPage);
       final merged = [..._articlesForFeed(feed), ...result.articles];
       _setFeedArticles(feed: feed, value: merged);
       _setFeedPage(feed: feed, value: nextPage);
       _setFeedHasMore(feed: feed, value: result.hasMore);
-      state = state.copyWith(isLoadingMore: false, isOffline: result.isFromCache);
+      state = state.copyWith(
+        isLoadingMore: false,
+        isOffline: result.isFromCache,
+      );
     } on AppFailure catch (error) {
       state = state.copyWith(
         isLoadingMore: false,
@@ -144,7 +147,20 @@ class NewsNotifier extends Notifier<NewsState> {
   }
 
   Future<void> toggleBookmark(NewsModel article) async {
-    await ref.read(newsRepositoryProvider).toggleBookmark(article);
+    final currentBookmarks = state.bookmarks;
+    final isBookmarked = currentBookmarks.any((item) => item.id == article.id);
+    state = state.copyWith(
+      bookmarks: isBookmarked
+          ? currentBookmarks.where((item) => item.id != article.id).toList()
+          : [...currentBookmarks, article],
+    );
+
+    try {
+      await ref.read(newsRepositoryProvider).toggleBookmark(article);
+    } catch (_) {
+      // If saving fails, refresh local bookmarks from storage.
+      _listenBookmarks();
+    }
   }
 
   bool isBookmarked(String articleId) {

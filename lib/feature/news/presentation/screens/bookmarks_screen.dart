@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
 import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
@@ -45,10 +47,26 @@ class BookmarksScreen extends ConsumerWidget {
                   },
                   child: ListTile(
                     leading: article.urlToImage.isNotEmpty
-                        ? Image.network(
-                            article.urlToImage,
-                            width: 72,
-                            fit: BoxFit.cover,
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: SizedBox(
+                              width: 72,
+                              height: 72,
+                              child: CachedNetworkImage(
+                                imageUrl: article.urlToImage,
+                                cacheManager: newsImageCacheManager,
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) => Container(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.surfaceContainer,
+                                  child: const Icon(
+                                    Icons.broken_image,
+                                    color: Colors.white54,
+                                  ),
+                                ),
+                              ),
+                            ),
                           )
                         : null,
                     title: Text(article.title),
