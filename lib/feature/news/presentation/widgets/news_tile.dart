@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:news_reader_app/core/image/news_image_cache_manager.dart';
+import 'package:news_reader_app/core/cache/news_image_cache_manager.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/highlighted_text.dart';
