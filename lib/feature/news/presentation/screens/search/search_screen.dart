@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/search_states/search_state.dart';
 import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
@@ -163,6 +163,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           highlightQuery: highlight,
           isBookmarked: newsNotifier.isBookmarked(article.id),
           onBookmarkTap: () => newsNotifier.toggleBookmark(article),
+          onTap: () =>
+              context.router.push(ArticleDetailRoute(article: article)),
         );
       },
     );

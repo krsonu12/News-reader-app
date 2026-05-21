@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SearchState {
 
- String get query; List<NewsModel> get articles; bool get isLoading; bool get isLoadingMore; bool get hasMore; int get page; int get totalResults; bool get hasError; String get errorMessage; bool get queryTooShort;
+ String get query; List<Article> get articles; bool get isLoading; bool get isLoadingMore; bool get hasMore; int get page; int get totalResults; bool get hasError; String get errorMessage; bool get queryTooShort;
 /// Create a copy of SearchState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $SearchStateCopyWith<$Res>  {
   factory $SearchStateCopyWith(SearchState value, $Res Function(SearchState) _then) = _$SearchStateCopyWithImpl;
 @useResult
 $Res call({
- String query, List<NewsModel> articles, bool isLoading, bool isLoadingMore, bool hasMore, int page, int totalResults, bool hasError, String errorMessage, bool queryTooShort
+ String query, List<Article> articles, bool isLoading, bool isLoadingMore, bool hasMore, int page, int totalResults, bool hasError, String errorMessage, bool queryTooShort
 });
 
 
@@ -66,7 +66,7 @@ class _$SearchStateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,articles: null == articles ? _self.articles : articles // ignore: cast_nullable_to_non_nullable
-as List<NewsModel>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as List<Article>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
 as bool,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
 as bool,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  List<NewsModel> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  List<Article> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SearchState() when $default != null:
 return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_that.hasMore,_that.page,_that.totalResults,_that.hasError,_that.errorMessage,_that.queryTooShort);case _:
@@ -180,7 +180,7 @@ return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  List<NewsModel> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  List<Article> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)  $default,) {final _that = this;
 switch (_that) {
 case _SearchState():
 return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_that.hasMore,_that.page,_that.totalResults,_that.hasError,_that.errorMessage,_that.queryTooShort);case _:
@@ -200,7 +200,7 @@ return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  List<NewsModel> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  List<Article> articles,  bool isLoading,  bool isLoadingMore,  bool hasMore,  int page,  int totalResults,  bool hasError,  String errorMessage,  bool queryTooShort)?  $default,) {final _that = this;
 switch (_that) {
 case _SearchState() when $default != null:
 return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_that.hasMore,_that.page,_that.totalResults,_that.hasError,_that.errorMessage,_that.queryTooShort);case _:
@@ -215,12 +215,12 @@ return $default(_that.query,_that.articles,_that.isLoading,_that.isLoadingMore,_
 
 
 class _SearchState implements SearchState {
-  const _SearchState({this.query = '', final  List<NewsModel> articles = const [], this.isLoading = false, this.isLoadingMore = false, this.hasMore = false, this.page = 1, this.totalResults = 0, this.hasError = false, this.errorMessage = '', this.queryTooShort = false}): _articles = articles;
+  const _SearchState({this.query = '', final  List<Article> articles = const [], this.isLoading = false, this.isLoadingMore = false, this.hasMore = false, this.page = 1, this.totalResults = 0, this.hasError = false, this.errorMessage = '', this.queryTooShort = false}): _articles = articles;
   
 
 @override@JsonKey() final  String query;
- final  List<NewsModel> _articles;
-@override@JsonKey() List<NewsModel> get articles {
+ final  List<Article> _articles;
+@override@JsonKey() List<Article> get articles {
   if (_articles is EqualUnmodifiableListView) return _articles;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_articles);
@@ -265,7 +265,7 @@ abstract mixin class _$SearchStateCopyWith<$Res> implements $SearchStateCopyWith
   factory _$SearchStateCopyWith(_SearchState value, $Res Function(_SearchState) _then) = __$SearchStateCopyWithImpl;
 @override @useResult
 $Res call({
- String query, List<NewsModel> articles, bool isLoading, bool isLoadingMore, bool hasMore, int page, int totalResults, bool hasError, String errorMessage, bool queryTooShort
+ String query, List<Article> articles, bool isLoading, bool isLoadingMore, bool hasMore, int page, int totalResults, bool hasError, String errorMessage, bool queryTooShort
 });
 
 
@@ -286,7 +286,7 @@ class __$SearchStateCopyWithImpl<$Res>
   return _then(_SearchState(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,articles: null == articles ? _self._articles : articles // ignore: cast_nullable_to_non_nullable
-as List<NewsModel>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as List<Article>,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
 as bool,hasMore: null == hasMore ? _self.hasMore : hasMore // ignore: cast_nullable_to_non_nullable
 as bool,page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable

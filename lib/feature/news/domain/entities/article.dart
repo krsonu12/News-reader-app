@@ -1,0 +1,78 @@
+class Article {
+  const Article({
+    required this.title,
+    required this.description,
+    required this.content,
+    required this.url,
+    required this.urlToImage,
+    required this.publishedAt,
+    required this.sourceName,
+    required this.author,
+  });
+
+  final String title;
+  final String description;
+  final String content;
+  final String url;
+  final String urlToImage;
+  final String publishedAt;
+  final String sourceName;
+  final String author;
+
+  String get id {
+    if (url.isNotEmpty) return url;
+
+    final fallback = [
+      title,
+      description,
+      content,
+      urlToImage,
+      publishedAt,
+      sourceName,
+      author,
+    ].map((v) => v.trim()).where((v) => v.isNotEmpty).join('|');
+
+    return fallback.isNotEmpty ? fallback : 'unknown_article';
+  }
+
+  Article copyWith({
+    String? title,
+    String? description,
+    String? content,
+    String? url,
+    String? urlToImage,
+    String? publishedAt,
+    String? sourceName,
+    String? author,
+  }) {
+    return Article(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      content: content ?? this.content,
+      url: url ?? this.url,
+      urlToImage: urlToImage ?? this.urlToImage,
+      publishedAt: publishedAt ?? this.publishedAt,
+      sourceName: sourceName ?? this.sourceName,
+      author: author ?? this.author,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Article && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  /// Estimated reading time in minutes based on word count at 200 wpm.
+  int get estimatedReadMinutes {
+    final text = '$content $description $title'.trim();
+    if (text.isEmpty) return 1;
+    final words = text.split(RegExp(r'\s+')).length;
+    return (words / 200).ceil().clamp(1, 60);
+  }
+
+  @override
+  String toString() => 'Article(title: $title, source: $sourceName)';
+}

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'news_model.dart';
+part of 'article_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'news_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$NewsModel {
+mixin _$ArticleDto {
 
  String get title; String get description; String get content; String get url; String get urlToImage; String get publishedAt; String get sourceName; String get author;
-/// Create a copy of NewsModel
+/// Create a copy of ArticleDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$NewsModelCopyWith<NewsModel> get copyWith => _$NewsModelCopyWithImpl<NewsModel>(this as NewsModel, _$identity);
+$ArticleDtoCopyWith<ArticleDto> get copyWith => _$ArticleDtoCopyWithImpl<ArticleDto>(this as ArticleDto, _$identity);
 
-  /// Serializes this NewsModel to a JSON map.
+  /// Serializes this ArticleDto to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ArticleDto&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,title,description,content,url,urlToI
 
 @override
 String toString() {
-  return 'NewsModel(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
+  return 'ArticleDto(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $NewsModelCopyWith<$Res>  {
-  factory $NewsModelCopyWith(NewsModel value, $Res Function(NewsModel) _then) = _$NewsModelCopyWithImpl;
+abstract mixin class $ArticleDtoCopyWith<$Res>  {
+  factory $ArticleDtoCopyWith(ArticleDto value, $Res Function(ArticleDto) _then) = _$ArticleDtoCopyWithImpl;
 @useResult
 $Res call({
  String title, String description, String content, String url, String urlToImage, String publishedAt, String sourceName, String author
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$NewsModelCopyWithImpl<$Res>
-    implements $NewsModelCopyWith<$Res> {
-  _$NewsModelCopyWithImpl(this._self, this._then);
+class _$ArticleDtoCopyWithImpl<$Res>
+    implements $ArticleDtoCopyWith<$Res> {
+  _$ArticleDtoCopyWithImpl(this._self, this._then);
 
-  final NewsModel _self;
-  final $Res Function(NewsModel) _then;
+  final ArticleDto _self;
+  final $Res Function(ArticleDto) _then;
 
-/// Create a copy of NewsModel
+/// Create a copy of ArticleDto
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? content = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,Object? sourceName = null,Object? author = null,}) {
   return _then(_self.copyWith(
@@ -82,8 +82,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [NewsModel].
-extension NewsModelPatterns on NewsModel {
+/// Adds pattern-matching-related methods to [ArticleDto].
+extension ArticleDtoPatterns on ArticleDto {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -96,10 +96,10 @@ extension NewsModelPatterns on NewsModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _NewsModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ArticleDto value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _NewsModel() when $default != null:
+case _ArticleDto() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -118,10 +118,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _NewsModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ArticleDto value)  $default,){
 final _that = this;
 switch (_that) {
-case _NewsModel():
+case _ArticleDto():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -139,10 +139,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _NewsModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ArticleDto value)?  $default,){
 final _that = this;
 switch (_that) {
-case _NewsModel() when $default != null:
+case _ArticleDto() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -162,7 +162,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _NewsModel() when $default != null:
+case _ArticleDto() when $default != null:
 return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   return orElse();
 
@@ -183,7 +183,7 @@ return $default(_that.title,_that.description,_that.content,_that.url,_that.urlT
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)  $default,) {final _that = this;
 switch (_that) {
-case _NewsModel():
+case _ArticleDto():
 return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   throw StateError('Unexpected subclass');
 
@@ -203,7 +203,7 @@ return $default(_that.title,_that.description,_that.content,_that.url,_that.urlT
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String description,  String content,  String url,  String urlToImage,  String publishedAt,  String sourceName,  String author)?  $default,) {final _that = this;
 switch (_that) {
-case _NewsModel() when $default != null:
+case _ArticleDto() when $default != null:
 return $default(_that.title,_that.description,_that.content,_that.url,_that.urlToImage,_that.publishedAt,_that.sourceName,_that.author);case _:
   return null;
 
@@ -215,9 +215,9 @@ return $default(_that.title,_that.description,_that.content,_that.url,_that.urlT
 /// @nodoc
 @JsonSerializable()
 
-class _NewsModel implements NewsModel {
-  const _NewsModel({this.title = '', this.description = '', this.content = '', this.url = '', this.urlToImage = '', this.publishedAt = '', this.sourceName = '', this.author = ''});
-  factory _NewsModel.fromJson(Map<String, dynamic> json) => _$NewsModelFromJson(json);
+class _ArticleDto implements ArticleDto {
+  const _ArticleDto({this.title = '', this.description = '', this.content = '', this.url = '', this.urlToImage = '', this.publishedAt = '', this.sourceName = '', this.author = ''});
+  factory _ArticleDto.fromJson(Map<String, dynamic> json) => _$ArticleDtoFromJson(json);
 
 @override@JsonKey() final  String title;
 @override@JsonKey() final  String description;
@@ -228,20 +228,20 @@ class _NewsModel implements NewsModel {
 @override@JsonKey() final  String sourceName;
 @override@JsonKey() final  String author;
 
-/// Create a copy of NewsModel
+/// Create a copy of ArticleDto
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$NewsModelCopyWith<_NewsModel> get copyWith => __$NewsModelCopyWithImpl<_NewsModel>(this, _$identity);
+_$ArticleDtoCopyWith<_ArticleDto> get copyWith => __$ArticleDtoCopyWithImpl<_ArticleDto>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$NewsModelToJson(this, );
+  return _$ArticleDtoToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewsModel&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ArticleDto&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.url, url) || other.url == url)&&(identical(other.urlToImage, urlToImage) || other.urlToImage == urlToImage)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.sourceName, sourceName) || other.sourceName == sourceName)&&(identical(other.author, author) || other.author == author));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -250,15 +250,15 @@ int get hashCode => Object.hash(runtimeType,title,description,content,url,urlToI
 
 @override
 String toString() {
-  return 'NewsModel(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
+  return 'ArticleDto(title: $title, description: $description, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, sourceName: $sourceName, author: $author)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$NewsModelCopyWith<$Res> implements $NewsModelCopyWith<$Res> {
-  factory _$NewsModelCopyWith(_NewsModel value, $Res Function(_NewsModel) _then) = __$NewsModelCopyWithImpl;
+abstract mixin class _$ArticleDtoCopyWith<$Res> implements $ArticleDtoCopyWith<$Res> {
+  factory _$ArticleDtoCopyWith(_ArticleDto value, $Res Function(_ArticleDto) _then) = __$ArticleDtoCopyWithImpl;
 @override @useResult
 $Res call({
  String title, String description, String content, String url, String urlToImage, String publishedAt, String sourceName, String author
@@ -269,17 +269,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$NewsModelCopyWithImpl<$Res>
-    implements _$NewsModelCopyWith<$Res> {
-  __$NewsModelCopyWithImpl(this._self, this._then);
+class __$ArticleDtoCopyWithImpl<$Res>
+    implements _$ArticleDtoCopyWith<$Res> {
+  __$ArticleDtoCopyWithImpl(this._self, this._then);
 
-  final _NewsModel _self;
-  final $Res Function(_NewsModel) _then;
+  final _ArticleDto _self;
+  final $Res Function(_ArticleDto) _then;
 
-/// Create a copy of NewsModel
+/// Create a copy of ArticleDto
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? content = null,Object? url = null,Object? urlToImage = null,Object? publishedAt = null,Object? sourceName = null,Object? author = null,}) {
-  return _then(_NewsModel(
+  return _then(_ArticleDto(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable

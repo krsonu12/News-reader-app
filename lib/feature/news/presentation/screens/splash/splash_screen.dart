@@ -17,6 +17,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _animation;
 
+  late AnimationController _textController;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -34,12 +38,31 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       }
     });
 
+    _textController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    );
+
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeIn));
+
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _textController, curve: Curves.elasticOut),
+    );
+
     _controller.forward();
+
+    Future.delayed(const Duration(milliseconds: 600), () {
+      if (mounted) _textController.forward();
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -47,7 +70,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
-        animation: _animation,
+        animation: Listenable.merge([_animation, _textController]),
         builder: (context, child) {
           return Stack(
             fit: StackFit.expand,
@@ -63,6 +86,39 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   painter: SplashShapePainter(_animation.value),
                 ),
               ),
+
+              Center(
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: ScaleTransition(
+                    scale: _scaleAnimation,
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'TOP',
+                            style: TextStyle(
+                              fontSize: 42,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                              letterSpacing: 4,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'News',
+                            style: TextStyle(
+                              fontSize: 42,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white70,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },
@@ -71,7 +127,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 }
 
-/// Custom painter
 class SplashShapePainter extends CustomPainter {
   final double progress;
   SplashShapePainter(this.progress);
@@ -87,27 +142,23 @@ class SplashShapePainter extends CustomPainter {
     final cx = size.width / 2;
     final cy = size.height / 2;
 
-    // Arm extension
     final armLength = size.width * 1.5 * progress;
-    // Central fat body
+
     final bodyRadius = size.width * 1.5 * progress;
-    // How deep the inner curves bend inward
+
     final curveInset = bodyRadius * 0.25;
 
-    // Start at top
     path.moveTo(cx, cy - bodyRadius - armLength);
 
-    // Top → Right (rounded inward curve)
     path.cubicTo(
       cx + curveInset,
-      cy - bodyRadius - armLength, // control1
+      cy - bodyRadius - armLength,
       cx - bodyRadius + armLength,
-      cy - curveInset, // control2
+      cy - curveInset,
       cx + bodyRadius + armLength,
-      cy, // end
+      cy,
     );
 
-    // Right → Bottom
     path.cubicTo(
       cx - bodyRadius + armLength,
       cy + curveInset,
@@ -117,7 +168,6 @@ class SplashShapePainter extends CustomPainter {
       cy + bodyRadius + armLength,
     );
 
-    // Bottom → Left
     path.cubicTo(
       cx - curveInset,
       cy + bodyRadius + armLength,
@@ -127,7 +177,6 @@ class SplashShapePainter extends CustomPainter {
       cy,
     );
 
-    // Left → Top
     path.cubicTo(
       cx + bodyRadius - armLength,
       cy - curveInset,

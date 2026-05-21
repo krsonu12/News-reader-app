@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
-import 'package:news_reader_app/feature/news/data/models/news_model.dart'
+import 'package:news_reader_app/feature/news/domain/entities/article.dart'
     as _i9;
 import 'package:news_reader_app/feature/news/presentation/screens/article_details/article_detail_screen.dart'
     as _i1;
@@ -21,17 +21,17 @@ import 'package:news_reader_app/feature/news/presentation/screens/home/home.dart
     as _i3;
 import 'package:news_reader_app/feature/news/presentation/screens/search/search_screen.dart'
     as _i4;
-import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart'
-    as _i6;
 import 'package:news_reader_app/feature/news/presentation/screens/settings/settings_screen.dart'
     as _i5;
+import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart'
+    as _i6;
 
 /// generated route for
 /// [_i1.ArticleDetailScreen]
 class ArticleDetailRoute extends _i7.PageRouteInfo<ArticleDetailRouteArgs> {
   ArticleDetailRoute({
     _i8.Key? key,
-    required _i9.NewsModel article,
+    required _i9.Article article,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          ArticleDetailRoute.name,
@@ -55,7 +55,7 @@ class ArticleDetailRouteArgs {
 
   final _i8.Key? key;
 
-  final _i9.NewsModel article;
+  final _i9.Article article;
 
   @override
   String toString() {

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'news_model.dart';
+part of 'article_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_NewsModel _$NewsModelFromJson(Map<String, dynamic> json) => _NewsModel(
+_ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => _ArticleDto(
   title: json['title'] as String? ?? '',
   description: json['description'] as String? ?? '',
   content: json['content'] as String? ?? '',
@@ -17,7 +17,7 @@ _NewsModel _$NewsModelFromJson(Map<String, dynamic> json) => _NewsModel(
   author: json['author'] as String? ?? '',
 );
 
-Map<String, dynamic> _$NewsModelToJson(_NewsModel instance) =>
+Map<String, dynamic> _$ArticleDtoToJson(_ArticleDto instance) =>
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,

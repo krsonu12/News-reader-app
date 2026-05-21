@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/domain/entities/article.dart';
 
 class AnimatedNewsTicker extends StatefulWidget {
   const AnimatedNewsTicker({
@@ -13,8 +13,8 @@ class AnimatedNewsTicker extends StatefulWidget {
     this.height = 220,
   });
 
-  final List<NewsModel> headlines;
-  final ValueChanged<NewsModel>? onHeadlineTap;
+  final List<Article> headlines;
+  final ValueChanged<Article>? onHeadlineTap;
   final bool isLoading;
   final double height;
 
