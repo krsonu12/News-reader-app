@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/error/failures.dart';
-import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/feature/news/presentation/search_states/search_state.dart';
+import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 
 const _debounceDuration = Duration(milliseconds: 300);
 const _minQueryLength = 3;
 
-final searchNotifierProvider =
-    NotifierProvider<SearchNotifier, SearchState>(SearchNotifier.new);
 
 class SearchNotifier extends Notifier<SearchState> {
   Timer? _debounceTimer;
@@ -67,11 +65,9 @@ class SearchNotifier extends Notifier<SearchState> {
     );
 
     try {
-      final result = await ref.read(newsRepositoryProvider).searchEverything(
-        query: query,
-        page: page,
-        from: _defaultFromDate(),
-      );
+      final result = await ref
+          .read(newsRepositoryProvider)
+          .searchEverything(query: query, page: page, from: _defaultFromDate());
 
       final articles = reset
           ? result.articles
@@ -107,14 +103,20 @@ class SearchNotifier extends Notifier<SearchState> {
     if (state.query.trim().length < _minQueryLength) return;
 
     final nextPage = state.page + 1;
-    state = state.copyWith(isLoadingMore: true, hasError: false, errorMessage: '');
+    state = state.copyWith(
+      isLoadingMore: true,
+      hasError: false,
+      errorMessage: '',
+    );
 
     try {
-      final result = await ref.read(newsRepositoryProvider).searchEverything(
-        query: state.query.trim(),
-        page: nextPage,
-        from: _defaultFromDate(),
-      );
+      final result = await ref
+          .read(newsRepositoryProvider)
+          .searchEverything(
+            query: state.query.trim(),
+            page: nextPage,
+            from: _defaultFromDate(),
+          );
 
       state = state.copyWith(
         articles: [...state.articles, ...result.articles],

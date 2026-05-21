@@ -21,10 +21,10 @@ import 'package:news_reader_app/feature/news/presentation/screens/home/home.dart
     as _i3;
 import 'package:news_reader_app/feature/news/presentation/screens/search/search_screen.dart'
     as _i4;
-import 'package:news_reader_app/feature/news/presentation/screens/settings/settings_screen.dart'
-    as _i5;
 import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart'
     as _i6;
+import 'package:news_reader_app/feature/news/presentation/screens/settings/settings_screen.dart'
+    as _i5;
 
 /// generated route for
 /// [_i1.ArticleDetailScreen]

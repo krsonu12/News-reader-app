@@ -1,38 +1,11 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_reader_app/core/network/dio_provider.dart';
 import 'package:news_reader_app/core/error/failures.dart';
-import 'package:news_reader_app/feature/news/data/local_datasource/bookmark_local_datasource.dart';
-import 'package:news_reader_app/feature/news/data/local_datasource/news_cache_local_datasource.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
-import 'package:news_reader_app/feature/news/data/remote_datasource/repository_impl.dart';
 import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
 import 'package:news_reader_app/feature/news/presentation/news_states/news_state.dart';
-
-final dioProvider = Provider<Dio>((ref) {
-  return Dio(
-    BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
-      sendTimeout: const Duration(seconds: 15),
-      headers: {'Accept': 'application/json'},
-    ),
-  );
-});
-
-final newsRepositoryProvider = Provider<NewsRepository>((ref) {
-  return RepositoryImpl(
-    dio: ref.watch(dioProvider),
-    newsCacheLocalDataSource: NewsCacheLocalDataSource(),
-    bookmarkLocalDataSource: BookmarkLocalDataSource(),
-  );
-});
-
-final newsNotifierProvider = NotifierProvider<NewsNotifier, NewsState>(
-  NewsNotifier.new,
-);
+import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 
 class NewsNotifier extends Notifier<NewsState> {
   StreamSubscription? _bookmarksSub;
@@ -159,7 +132,6 @@ class NewsNotifier extends Notifier<NewsState> {
     try {
       await ref.read(newsRepositoryProvider).toggleBookmark(article);
     } catch (_) {
-      // If saving fails, refresh local bookmarks from storage.
       _listenBookmarks();
     }
   }

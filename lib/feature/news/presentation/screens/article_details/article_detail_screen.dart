@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
-import 'package:news_reader_app/feature/news/presentation/news_notifier/news_notifier.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
+import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 import 'package:share_plus/share_plus.dart';
 
 @RoutePage()
