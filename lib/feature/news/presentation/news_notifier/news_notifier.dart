@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/network/dio_provider.dart';
 import 'package:news_reader_app/core/error/failures.dart';
 import 'package:news_reader_app/feature/news/data/local_datasource/bookmark_local_datasource.dart';
 import 'package:news_reader_app/feature/news/data/local_datasource/news_cache_local_datasource.dart';

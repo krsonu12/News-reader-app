@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:news_reader_app/feature/news/data/local_datasource/hive_boxes.dart';
+import 'package:news_reader_app/core/storage/hive_boxes.dart';
 import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 
 class BookmarkLocalDataSource {

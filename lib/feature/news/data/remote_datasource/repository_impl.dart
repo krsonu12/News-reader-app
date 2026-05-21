@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:news_reader_app/core/constants/app_urls.dart';
+import 'package:news_reader_app/core/network/app_urls.dart';
 import 'package:news_reader_app/core/constants/secret.dart';
 import 'package:news_reader_app/core/error/error_mapper.dart';
 import 'package:news_reader_app/core/error/failures.dart';

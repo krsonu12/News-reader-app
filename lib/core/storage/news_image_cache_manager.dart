@@ -1,6 +1,5 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-
 class NewsImageCacheManager extends CacheManager {
   static const key = 'news_image_cache';
   static NewsImageCacheManager? _instance;
@@ -10,16 +9,15 @@ class NewsImageCacheManager extends CacheManager {
   }
 
   NewsImageCacheManager._()
-      : super(
-          Config(
-            key,
-            stalePeriod: const Duration(days: 7),
-            maxNrOfCacheObjects: 200,
-            repo: JsonCacheInfoRepository(databaseName: key),
-            fileService: HttpFileService(),
-          ),
-        );
-
+    : super(
+        Config(
+          key,
+          stalePeriod: const Duration(days: 7),
+          maxNrOfCacheObjects: 200,
+          repo: JsonCacheInfoRepository(databaseName: key),
+          fileService: HttpFileService(),
+        ),
+      );
 
   static CacheManager get instance => NewsImageCacheManager();
 }
