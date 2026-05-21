@@ -64,14 +64,17 @@ class ArticleDetailScreen extends ConsumerWidget {
                 height: 300,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: article.urlToImage,
-                    cacheManager: newsImageCacheManager,
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                    errorWidget: (context, url, error) =>
-                        const SizedBox.shrink(),
+                  child: Hero(
+                    tag: article.id,
+                    child: CachedNetworkImage(
+                      imageUrl: article.urlToImage,
+                      cacheManager: newsImageCacheManager,
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) =>
+                          const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               ),
