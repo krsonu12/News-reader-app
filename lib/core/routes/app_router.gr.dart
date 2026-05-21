@@ -13,18 +13,18 @@ import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
 import 'package:news_reader_app/feature/news/data/models/news_model.dart'
     as _i9;
-import 'package:news_reader_app/feature/news/presentation/screens/article_detail_screen.dart'
+import 'package:news_reader_app/feature/news/presentation/screens/article_details/article_detail_screen.dart'
     as _i1;
-import 'package:news_reader_app/feature/news/presentation/screens/bookmarks_screen.dart'
+import 'package:news_reader_app/feature/news/presentation/screens/bookmark/bookmarks_screen.dart'
     as _i2;
-import 'package:news_reader_app/feature/news/presentation/screens/home.dart'
+import 'package:news_reader_app/feature/news/presentation/screens/home/home.dart'
     as _i3;
-import 'package:news_reader_app/feature/news/presentation/screens/search_screen.dart'
+import 'package:news_reader_app/feature/news/presentation/screens/search/search_screen.dart'
     as _i4;
+import 'package:news_reader_app/feature/news/presentation/screens/settings/settings_screen.dart'
+    as _i5;
 import 'package:news_reader_app/feature/news/presentation/screens/splash/splash_screen.dart'
     as _i6;
-import 'package:news_reader_app/feature/settings/presentation/screens/settings_screen.dart'
-    as _i5;
 
 /// generated route for
 /// [_i1.ArticleDetailScreen]
