@@ -187,7 +187,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 SliverToBoxAdapter(
                   child: MaterialBanner(
                     content: const Text('Offline mode: showing cached news'),
-                    actions: [],
+                    actions: [Text("")],
                   ),
                 ),
               if (state.isLoading && articles.isEmpty)
