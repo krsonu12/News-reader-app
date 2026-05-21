@@ -1,4 +1,4 @@
-/// Pure domain entity — no JSON, no Flutter, no framework dependencies.
+
 class Article {
   const Article({
     required this.title,
@@ -20,7 +20,7 @@ class Article {
   final String sourceName;
   final String author;
 
-  /// Stable identity key: prefer URL, fall back to a pipe-joined fingerprint.
+
   String get id {
     if (url.isNotEmpty) return url;
 

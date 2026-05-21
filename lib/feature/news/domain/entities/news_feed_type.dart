@@ -1,4 +1,4 @@
-/// Represents the available news feed categories.
+
 enum NewsFeedType {
   topHeadlines,
   business,

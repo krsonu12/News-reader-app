@@ -1,6 +1,5 @@
 import 'package:news_reader_app/feature/news/domain/entities/article.dart';
 
-/// Value object returned by paginated news fetches.
 class NewsPageResult {
   const NewsPageResult({
     required this.articles,

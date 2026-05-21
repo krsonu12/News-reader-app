@@ -119,7 +119,7 @@ class NewsNotifier extends Notifier<NewsState> {
   Future<void> toggleBookmark(Article article) async {
     final currentBookmarks = state.bookmarks;
     final isBookmarked = currentBookmarks.any((item) => item.id == article.id);
-    // Optimistic update
+
     state = state.copyWith(
       bookmarks: isBookmarked
           ? currentBookmarks.where((item) => item.id != article.id).toList()
@@ -129,7 +129,7 @@ class NewsNotifier extends Notifier<NewsState> {
     try {
       await ref.read(toggleBookmarkUseCaseProvider).call(article);
     } catch (_) {
-      // Revert on failure by re-syncing from stream
+
       _listenBookmarks();
     }
   }
@@ -138,7 +138,7 @@ class NewsNotifier extends Notifier<NewsState> {
     return state.bookmarks.any((item) => item.id == articleId);
   }
 
-  // ── Private helpers ───────────────────────────────────────────────────────
+ 
 
   int _pageForFeed(NewsFeedType feed) => state.feedPages[feed] ?? 1;
 

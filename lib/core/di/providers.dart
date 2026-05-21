@@ -3,7 +3,7 @@ import 'package:news_reader_app/core/network/dio_provider.dart';
 import 'package:news_reader_app/feature/news/data/datasources/bookmark_datasource.dart';
 import 'package:news_reader_app/feature/news/data/datasources/news_cache_datasource.dart';
 import 'package:news_reader_app/feature/news/data/datasources/news_remote_datasource.dart';
-import 'package:news_reader_app/feature/news/data/repositories/news_repository_impl.dart';
+import 'package:news_reader_app/feature/news/data/repositories_impl/news_repository_impl.dart';
 import 'package:news_reader_app/feature/news/domain/repositories/news_repository.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/fetch_feed_page_usecase.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/get_cached_feed_usecase.dart';
@@ -11,7 +11,7 @@ import 'package:news_reader_app/feature/news/domain/usecases/search_news_usecase
 import 'package:news_reader_app/feature/news/domain/usecases/toggle_bookmark_usecase.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/watch_bookmarks_usecase.dart';
 
-// ── Data Sources ─────────────────────────────────────────────────────────────
+// ── Data Sources
 
 final newsRemoteDataSourceProvider = Provider<NewsRemoteDataSource>((ref) {
   return NewsRemoteDataSourceImpl(ref.watch(dioProvider));
@@ -27,7 +27,7 @@ final bookmarkDataSourceProvider = Provider<BookmarkDataSource>((ref) {
   return ds;
 });
 
-// ── Repository ────────────────────────────────────────────────────────────────
+// ── Repository
 
 final newsRepositoryProvider = Provider<NewsRepository>((ref) {
   return NewsRepositoryImpl(
@@ -37,7 +37,7 @@ final newsRepositoryProvider = Provider<NewsRepository>((ref) {
   );
 });
 
-// ── Use Cases ─────────────────────────────────────────────────────────────────
+// ── Use Cases
 
 final fetchFeedPageUseCaseProvider = Provider<FetchFeedPageUseCase>((ref) {
   return FetchFeedPageUseCase(ref.watch(newsRepositoryProvider));
