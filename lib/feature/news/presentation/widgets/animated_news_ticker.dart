@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
 import 'package:news_reader_app/feature/news/domain/entities/article.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AnimatedNewsTicker extends StatefulWidget {
   const AnimatedNewsTicker({
@@ -74,7 +74,7 @@ class _AnimatedNewsTickerState extends State<AnimatedNewsTicker>
                 child: Text(
                   'No headlines available yet.',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSecondaryContainer,
+                    color: Colors.white,
                   ),
                 ),
               );
