@@ -15,6 +15,8 @@ abstract class NewsCacheDataSource {
   List<ArticleDto> getFeed({required NewsFeedType feed});
 
   List<ArticleDto> getAnyFeed();
+
+  Future<void> clearAll();
 }
 
 /// Hive-backed implementation of [NewsCacheDataSource].
@@ -77,5 +79,11 @@ class NewsCacheDataSourceImpl implements NewsCacheDataSource {
           ? HiveBoxes.cachedTopHeadlines
           : HiveBoxes.cachedEverything,
     );
+  }
+
+  @override
+  Future<void> clearAll() async {
+    await Hive.box<String>(HiveBoxes.cachedTopHeadlines).clear();
+    await Hive.box<String>(HiveBoxes.cachedEverything).clear();
   }
 }

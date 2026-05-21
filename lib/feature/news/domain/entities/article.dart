@@ -1,4 +1,3 @@
-
 class Article {
   const Article({
     required this.title,
@@ -19,7 +18,6 @@ class Article {
   final String publishedAt;
   final String sourceName;
   final String author;
-
 
   String get id {
     if (url.isNotEmpty) return url;
@@ -66,6 +64,14 @@ class Article {
 
   @override
   int get hashCode => id.hashCode;
+
+  /// Estimated reading time in minutes based on word count at 200 wpm.
+  int get estimatedReadMinutes {
+    final text = '$content $description $title'.trim();
+    if (text.isEmpty) return 1;
+    final words = text.split(RegExp(r'\s+')).length;
+    return (words / 200).ceil().clamp(1, 60);
+  }
 
   @override
   String toString() => 'Article(title: $title, source: $sourceName)';

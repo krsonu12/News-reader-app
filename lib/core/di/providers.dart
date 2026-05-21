@@ -5,6 +5,7 @@ import 'package:news_reader_app/feature/news/data/datasources/news_cache_datasou
 import 'package:news_reader_app/feature/news/data/datasources/news_remote_datasource.dart';
 import 'package:news_reader_app/feature/news/data/repositories_impl/news_repository_impl.dart';
 import 'package:news_reader_app/feature/news/domain/repositories/news_repository.dart';
+import 'package:news_reader_app/feature/news/domain/usecases/clear_news_cache_usecase.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/fetch_feed_page_usecase.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/get_cached_feed_usecase.dart';
 import 'package:news_reader_app/feature/news/domain/usecases/search_news_usecase.dart';
@@ -57,4 +58,8 @@ final watchBookmarksUseCaseProvider = Provider<WatchBookmarksUseCase>((ref) {
 
 final getCachedFeedUseCaseProvider = Provider<GetCachedFeedUseCase>((ref) {
   return GetCachedFeedUseCase(ref.watch(newsRepositoryProvider));
+});
+
+final clearNewsCacheUseCaseProvider = Provider<ClearNewsCacheUseCase>((ref) {
+  return ClearNewsCacheUseCase(ref.watch(newsRepositoryProvider));
 });

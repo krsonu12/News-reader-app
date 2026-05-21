@@ -40,4 +40,7 @@ abstract class NewsRepository {
     int pageSize = NewsPageResult.pageSize,
     String? from,
   });
+
+  /// Clears all locally cached news feeds.
+  Future<void> clearCache();
 }

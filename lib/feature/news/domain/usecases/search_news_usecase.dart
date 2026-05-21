@@ -16,7 +16,15 @@ class SearchNewsUseCase {
       query: query,
       page: page,
       pageSize: pageSize,
-      from: from,
+      from: from ?? _thirtyDaysAgo(),
     );
+  }
+
+  /// Returns an ISO-8601 date string 30 days in the past.
+  static String _thirtyDaysAgo() {
+    final date = DateTime.now().subtract(const Duration(days: 30));
+    final mm = date.month.toString().padLeft(2, '0');
+    final dd = date.day.toString().padLeft(2, '0');
+    return '${date.year}-$mm-$dd';
   }
 }

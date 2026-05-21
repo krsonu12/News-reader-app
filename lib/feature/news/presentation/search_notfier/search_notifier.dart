@@ -65,7 +65,7 @@ class SearchNotifier extends Notifier<SearchState> {
     try {
       final result = await ref
           .read(searchNewsUseCaseProvider)
-          .call(query: query, page: page, from: _defaultFromDate());
+          .call(query: query, page: page);
 
       final articles = reset
           ? result.articles
@@ -114,7 +114,6 @@ class SearchNotifier extends Notifier<SearchState> {
             query: state.query.trim(),
             page: nextPage,
             pageSize: NewsPageResult.pageSize,
-            from: _defaultFromDate(),
           );
 
       state = state.copyWith(
@@ -139,8 +138,5 @@ class SearchNotifier extends Notifier<SearchState> {
     }
   }
 
-  String _defaultFromDate() {
-    final from = DateTime.now().subtract(const Duration(days: 30));
-    return '${from.year}-${from.month.toString().padLeft(2, '0')}-${from.day.toString().padLeft(2, '0')}';
-  }
+
 }

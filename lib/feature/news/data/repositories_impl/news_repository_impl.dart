@@ -162,6 +162,11 @@ class NewsRepositoryImpl implements NewsRepository {
     return bookmarkDataSource.toggleBookmark(article.toDto());
   }
 
+
+
+  @override
+  Future<void> clearCache() => cacheDataSource.clearAll();
+
   // ── Helpers ───────────────────────────────────────────────────────────────
 
   bool _hasMorePages({
