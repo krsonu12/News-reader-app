@@ -151,7 +151,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               Text(
                                 'The latest top stories',
                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.white,fontWeight: FontWeight.w500
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
