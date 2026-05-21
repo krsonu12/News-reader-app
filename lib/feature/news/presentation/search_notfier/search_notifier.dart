@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/di/providers.dart';
 import 'package:news_reader_app/core/error/failures.dart';
+import 'package:news_reader_app/feature/news/domain/entities/news_page_result.dart';
 import 'package:news_reader_app/feature/news/presentation/search_states/search_state.dart';
-import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 
 const _debounceDuration = Duration(milliseconds: 300);
 const _minQueryLength = 3;
-
 
 class SearchNotifier extends Notifier<SearchState> {
   Timer? _debounceTimer;
@@ -45,9 +45,7 @@ class SearchNotifier extends Notifier<SearchState> {
       errorMessage: '',
     );
 
-    _debounceTimer = Timer(_debounceDuration, () {
-      search(reset: true);
-    });
+    _debounceTimer = Timer(_debounceDuration, () => search(reset: true));
   }
 
   Future<void> search({bool reset = false}) async {
@@ -66,8 +64,8 @@ class SearchNotifier extends Notifier<SearchState> {
 
     try {
       final result = await ref
-          .read(newsRepositoryProvider)
-          .searchEverything(query: query, page: page, from: _defaultFromDate());
+          .read(searchNewsUseCaseProvider)
+          .call(query: query, page: page, from: _defaultFromDate());
 
       final articles = reset
           ? result.articles
@@ -111,10 +109,11 @@ class SearchNotifier extends Notifier<SearchState> {
 
     try {
       final result = await ref
-          .read(newsRepositoryProvider)
-          .searchEverything(
+          .read(searchNewsUseCaseProvider)
+          .call(
             query: state.query.trim(),
             page: nextPage,
+            pageSize: NewsPageResult.pageSize,
             from: _defaultFromDate(),
           );
 

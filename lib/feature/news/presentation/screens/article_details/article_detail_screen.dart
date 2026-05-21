@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/domain/entities/article.dart';
 import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -11,14 +11,14 @@ import 'package:share_plus/share_plus.dart';
 class ArticleDetailScreen extends ConsumerWidget {
   const ArticleDetailScreen({super.key, required this.article});
 
-  final NewsModel article;
+  final Article article;
 
   int _estimateReadMinutes() {
     final text = '${article.content} ${article.description} ${article.title}'
         .trim();
     if (text.isEmpty) return 1;
-    final words = text.split(RegExp(r"\s+")).length;
-    final wpm = 200;
+    final words = text.split(RegExp(r'\s+')).length;
+    const wpm = 200;
     return (words / wpm).ceil().clamp(1, 60);
   }
 

@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:news_reader_app/core/di/providers.dart';
 import 'package:news_reader_app/core/error/failures.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
-import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
+import 'package:news_reader_app/feature/news/domain/entities/article.dart';
+import 'package:news_reader_app/feature/news/domain/entities/news_feed_type.dart';
+import 'package:news_reader_app/feature/news/domain/entities/news_page_result.dart';
 import 'package:news_reader_app/feature/news/presentation/news_states/news_state.dart';
-import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 
 class NewsNotifier extends Notifier<NewsState> {
   StreamSubscription? _bookmarksSub;
@@ -21,15 +22,12 @@ class NewsNotifier extends Notifier<NewsState> {
     return const NewsState();
   }
 
-  List<NewsModel> get currentArticles {
+  List<Article> get currentArticles {
     return state.feedArticles[state.activeFeed] ?? [];
   }
 
   Future<void> setActiveFeed(NewsFeedType feed) async {
-    if (feed == state.activeFeed && currentArticles.isNotEmpty) {
-      return;
-    }
-
+    if (feed == state.activeFeed && currentArticles.isNotEmpty) return;
     state = state.copyWith(activeFeed: feed, hasError: false, errorMessage: '');
     await loadFeed(feed: feed, reset: true);
   }
@@ -43,12 +41,10 @@ class NewsNotifier extends Notifier<NewsState> {
     if (state.isLoading && !isRefresh) return;
 
     final page = reset ? 1 : _pageForFeed(feed);
-    final nextFeedArticles = Map<NewsFeedType, List<NewsModel>>.from(
+    final nextFeedArticles = Map<NewsFeedType, List<Article>>.from(
       state.feedArticles,
     );
-    if (reset) {
-      nextFeedArticles.remove(feed);
-    }
+    if (reset) nextFeedArticles.remove(feed);
 
     state = state.copyWith(
       isLoading: reset && !isRefresh,
@@ -60,8 +56,8 @@ class NewsNotifier extends Notifier<NewsState> {
 
     try {
       final result = await ref
-          .read(newsRepositoryProvider)
-          .fetchFeedPage(feed: feed, page: page);
+          .read(fetchFeedPageUseCaseProvider)
+          .call(feed: feed, page: page);
       _applyPageResult(feed: feed, result: result, reset: reset);
     } on AppFailure catch (error) {
       state = state.copyWith(
@@ -95,8 +91,8 @@ class NewsNotifier extends Notifier<NewsState> {
 
     try {
       final result = await ref
-          .read(newsRepositoryProvider)
-          .fetchFeedPage(feed: feed, page: nextPage);
+          .read(fetchFeedPageUseCaseProvider)
+          .call(feed: feed, page: nextPage);
       final merged = [..._articlesForFeed(feed), ...result.articles];
       _setFeedArticles(feed: feed, value: merged);
       _setFeedPage(feed: feed, value: nextPage);
@@ -120,9 +116,10 @@ class NewsNotifier extends Notifier<NewsState> {
     }
   }
 
-  Future<void> toggleBookmark(NewsModel article) async {
+  Future<void> toggleBookmark(Article article) async {
     final currentBookmarks = state.bookmarks;
     final isBookmarked = currentBookmarks.any((item) => item.id == article.id);
+    // Optimistic update
     state = state.copyWith(
       bookmarks: isBookmarked
           ? currentBookmarks.where((item) => item.id != article.id).toList()
@@ -130,8 +127,9 @@ class NewsNotifier extends Notifier<NewsState> {
     );
 
     try {
-      await ref.read(newsRepositoryProvider).toggleBookmark(article);
+      await ref.read(toggleBookmarkUseCaseProvider).call(article);
     } catch (_) {
+      // Revert on failure by re-syncing from stream
       _listenBookmarks();
     }
   }
@@ -140,17 +138,14 @@ class NewsNotifier extends Notifier<NewsState> {
     return state.bookmarks.any((item) => item.id == articleId);
   }
 
-  int _pageForFeed(NewsFeedType feed) {
-    return state.feedPages[feed] ?? 1;
-  }
+  // ── Private helpers ───────────────────────────────────────────────────────
 
-  bool _hasMoreForFeed(NewsFeedType feed) {
-    return state.feedHasMore[feed] ?? true;
-  }
+  int _pageForFeed(NewsFeedType feed) => state.feedPages[feed] ?? 1;
 
-  List<NewsModel> _articlesForFeed(NewsFeedType feed) {
-    return state.feedArticles[feed] ?? [];
-  }
+  bool _hasMoreForFeed(NewsFeedType feed) => state.feedHasMore[feed] ?? true;
+
+  List<Article> _articlesForFeed(NewsFeedType feed) =>
+      state.feedArticles[feed] ?? [];
 
   void _applyPageResult({
     required NewsFeedType feed,
@@ -175,9 +170,9 @@ class NewsNotifier extends Notifier<NewsState> {
 
   void _setFeedArticles({
     required NewsFeedType feed,
-    required List<NewsModel> value,
+    required List<Article> value,
   }) {
-    final next = Map<NewsFeedType, List<NewsModel>>.from(state.feedArticles);
+    final next = Map<NewsFeedType, List<Article>>.from(state.feedArticles);
     next[feed] = value;
     state = state.copyWith(feedArticles: next);
   }
@@ -196,7 +191,7 @@ class NewsNotifier extends Notifier<NewsState> {
 
   void _listenBookmarks() {
     _bookmarksSub?.cancel();
-    _bookmarksSub = ref.read(newsRepositoryProvider).watchBookmarks().listen((
+    _bookmarksSub = ref.read(watchBookmarksUseCaseProvider).call().listen((
       bookmarks,
     ) {
       state = state.copyWith(bookmarks: bookmarks);

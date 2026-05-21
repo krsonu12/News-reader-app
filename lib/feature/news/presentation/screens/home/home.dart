@@ -4,8 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/routes/app_router.gr.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
-import 'package:news_reader_app/feature/news/domain/repository/news_repository.dart';
+import 'package:news_reader_app/feature/news/domain/entities/news_feed_type.dart';
 import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/animated_news_ticker.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/news_shimmer_list.dart';
@@ -66,14 +65,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final notifier = ref.read(newsNotifierProvider.notifier);
     final articles = notifier.currentArticles;
 
-    final categories = [
+    const categories = [
       NewsFeedType.topHeadlines,
       NewsFeedType.business,
       NewsFeedType.sports,
       NewsFeedType.technology,
       NewsFeedType.health,
     ];
-    final categoryLabels = ['Top', 'Business', 'Sports', 'Tech', 'Health'];
+    const categoryLabels = ['Top', 'Business', 'Sports', 'Tech', 'Health'];
     final activeIndex = categories
         .indexOf(state.activeFeed)
         .clamp(0, categories.length - 1);
@@ -98,21 +97,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.bookmark),
-                    onPressed: () {
-                      context.router.push(BookmarksRoute());
-                    },
+                    onPressed: () => context.router.push(BookmarksRoute()),
                   ),
                   IconButton(
                     icon: const Icon(Icons.search),
-                    onPressed: () {
-                      context.router.push(const SearchRoute());
-                    },
+                    onPressed: () => context.router.push(const SearchRoute()),
                   ),
                   IconButton(
                     icon: const Icon(Icons.settings),
-                    onPressed: () {
-                      context.router.push(SettingsRoute());
-                    },
+                    onPressed: () => context.router.push(SettingsRoute()),
                   ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
@@ -138,7 +131,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               Text(
                                 'Top Headlines',
@@ -157,7 +149,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ],
                           ),
                         ),
-
                         Expanded(
                           child: AnimatedNewsTicker(
                             headlines: headlineArticles,
@@ -174,20 +165,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ],
                     ),
                   ),
-                  stretchModes: [
+                  stretchModes: const [
                     StretchMode.zoomBackground,
                     StretchMode.blurBackground,
                     StretchMode.fadeTitle,
                   ],
                 ),
-
                 bottom: TabBar(
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
                   onTap: (index) => notifier.setActiveFeed(categories[index]),
-                  tabs: categoryLabels
-                      .map((label) => Tab(text: label))
-                      .toList(),
+                  tabs: categoryLabels.map((l) => Tab(text: l)).toList(),
                   labelStyle: theme.textTheme.titleMedium,
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.white70,
@@ -201,9 +189,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     content: const Text('Offline mode: showing cached news'),
                     actions: [
                       TextButton(
-                        onPressed: () {
-                          context.pop();
-                        },
+                        onPressed: () => context.pop(),
                         child: const Text('OK'),
                       ),
                     ],

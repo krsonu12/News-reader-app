@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_reader_app/core/routes/app_router.gr.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
 import 'package:news_reader_app/feature/news/presentation/shared_providers/providers.dart';
 
 @RoutePage()

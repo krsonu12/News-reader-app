@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/domain/entities/article.dart';
 
 part 'search_state.freezed.dart';
 
@@ -7,7 +7,7 @@ part 'search_state.freezed.dart';
 abstract class SearchState with _$SearchState {
   const factory SearchState({
     @Default('') String query,
-    @Default([]) List<NewsModel> articles,
+    @Default([]) List<Article> articles,
     @Default(false) bool isLoading,
     @Default(false) bool isLoadingMore,
     @Default(false) bool hasMore,

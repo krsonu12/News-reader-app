@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_reader_app/core/storage/news_image_cache_manager.dart';
 import 'package:news_reader_app/core/theme/brand_theme_extension.dart';
-import 'package:news_reader_app/feature/news/data/models/news_model.dart';
+import 'package:news_reader_app/feature/news/domain/entities/article.dart';
 import 'package:news_reader_app/feature/news/presentation/widgets/highlighted_text.dart';
 
 class NewsTile extends StatelessWidget {
@@ -15,7 +15,7 @@ class NewsTile extends StatelessWidget {
     this.onTap,
   });
 
-  final NewsModel article;
+  final Article article;
   final bool isBookmarked;
   final VoidCallback onBookmarkTap;
   final String highlightQuery;
@@ -25,8 +25,8 @@ class NewsTile extends StatelessWidget {
     final text = '${article.content} ${article.description} ${article.title}'
         .trim();
     if (text.isEmpty) return 1;
-    final words = text.split(RegExp(r"\s+")).length;
-    final wpm = 200;
+    final words = text.split(RegExp(r'\s+')).length;
+    const wpm = 200;
     return (words / wpm).ceil().clamp(1, 60);
   }
 
